@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Save user to the database (replace with actual DB insertion)
-    // $conn = new mysqli('localhost', 'username', 'password', 'database');
     // $stmt = $conn->prepare("INSERT INTO users (fullname, email, password, phone) VALUES (?, ?, ?, ?)");
     // $stmt->bind_param("ssss", $fullname, $email, password_hash($password, PASSWORD_BCRYPT), $phone);
     // $stmt->execute();
