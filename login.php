@@ -7,26 +7,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
     $password = $_POST['password'];
 
-    // Validate inputs
-
-    if (password_verify($password, $stored_hashed_password)) {
-        // Password is correct, log the user in
-    } else {
-        // Invalid password
-    }
-    
-
-    if (!$email || strlen($password) < 16) {
+    // Validar los campos
+    if (!$email || strlen($password) < 8) {
         echo "Invalid login credentials.";
         exit();
-        
     }
 
-    // Database login logic (replace with actual DB query)
-    // $conn = new mysqli('localhost', 'username', 'password', 'database');
-    // Validate user from DB here...
+    // Buscar el usuario en la base de datos
+    $stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($stored_hashed_password);
+    $stmt->fetch();
+    $stmt->close();
 
-    $_SESSION['loggedin'] = true;
-    header("Location: welcome.php");
+    // Verificar contraseña
+    if ($stored_hashed_password && password_verify($password, $stored_hashed_password)) {
+        // Iniciar sesión
+        $_SESSION['loggedin'] = true;
+        header("Location: welcome.php");
+        exit();
+    } else {
+        echo "Invalid login credentials.";
+        exit();
+    }
 }
 ?>
