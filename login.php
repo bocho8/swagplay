@@ -7,29 +7,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
     $password = $_POST['password'];
 
-    // Validar los campos
-    if (!$email || strlen($password) < 8) {
-        echo "Invalid login credentials.";
+    // Validar email y contraseña
+    if (!$email) {
+        echo "Agregue un email valido.";
+        exit();
+    } else if (strlen($password) < 8) {
+        echo "La contraseña debe tener al menos 8 caracteres.";
         exit();
     }
 
     // Buscar el usuario en la base de datos
-    $stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->bind_result($stored_hashed_password);
-    $stmt->fetch();
-    $stmt->close();
+    $sql = "SELECT id, fullname, password FROM users WHERE email = '$email'";
+    $result = $conn->query($sql);
 
-    // Verificar contraseña
-    if ($stored_hashed_password && password_verify($password, $stored_hashed_password)) {
-        // Iniciar sesión
-        $_SESSION['loggedin'] = true;
-        header("Location: welcome.php");
-        exit();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $stored_hashed_password = $row['password'];
+
+        // Verificar la contraseña
+        if (password_verify($password, $stored_hashed_password)) {
+            // Establecer variables de sesión
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['fullname'] = $row['fullname'];
+            header("Location: welcome.php");
+            exit();
+        } else {
+            echo "Credenciales de inicio de sesión inválidas.";
+        }
     } else {
-        echo "Invalid login credentials.";
-        exit();
+        echo "Credenciales de inicio de sesión inválidas.";
     }
 }
 ?>

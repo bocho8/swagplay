@@ -26,18 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Hashear la contraseña
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-    // Guardar usuario en la base de datos
-    $stmt = $conn->prepare("INSERT INTO users (fullname, email, password, phone) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $fullname, $email, $hashed_password, $phone);
+    $sql = "INSERT INTO usuario (fullname, email, password, phone) VALUES ('$fullname', '$email', '$hashed_password', '$phone')";
     
-    if ($stmt->execute()) {
+    if ($conn->query($sql) === TRUE) {
         header("Location: welcome.php");
         exit();
     } else {
-        echo "Error al registrar el usuario.";
+        echo "Error al registrar el usuario: " . $conn->error;
     }
 }
 ?>
