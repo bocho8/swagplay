@@ -41,7 +41,7 @@
 }
 
 .modal-content input {
-    width: 100%;
+    width: 90%;
     padding: 12px;
     margin-bottom: 15px;
     border-radius: 30px;
@@ -672,7 +672,7 @@ footer .footer-top{
     background: url(../images/footer-bg.jpg) no-repeat;
     background-size: cover;
     background-position: center;
-    padding: 100px 30px;
+    padding: 50px 30px;
 }
 
 .footer-top nav{
@@ -937,7 +937,7 @@ footer .footer-top{
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; 
-    padding: 20px;
+    padding: 25px;
     border: 1px solid #888;
     width: 30%; 
 }
