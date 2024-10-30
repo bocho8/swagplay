@@ -105,7 +105,7 @@
 
     <button class="back-to-top"><i class="fa-solid fa-chevron-up"></i></button>
 
-    <!-- <script src="js/script.js"></script> -->
+    <script src="js/script.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/login.js"></script>
   </body>
