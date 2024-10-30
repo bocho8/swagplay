@@ -287,7 +287,7 @@
     color: #1d1a28;
 }
 .upcoming-movie{
-    background: url(../images/upcoming-bg.png) no-repeat;
+    background: url(../assets/images/upcoming-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
     padding: 100px 30px;
@@ -425,7 +425,7 @@
 }
 
 .service{
-    background: url(../images/service-bg.jpg) no-repeat;
+    background: url(../assets/images/service-bg.jpg) no-repeat;
     background-position: center;
     background-size: cover;
     padding: 100px 30px;
@@ -504,7 +504,7 @@
 }
 
 .top-movie{
-    background: url(../images/top-rated-bg.jpg) no-repeat;
+    background: url(../assets/images/top-rated-bg.jpg) no-repeat;
     background-size: cover;
     padding: 100px 30px;
 }
@@ -607,13 +607,13 @@
 }
 
 .tv-series{
-    background: url(../images/tv-series-bg.jpg) no-repeat;
+    background: url(../assets/images/tv-series-bg.jpg) no-repeat;
     background-size: cover;
     padding: 100px 30px;
 }
 
 .trial{
-    background: url(../images/cta-bg.jpg) no-repeat;
+    background: url(../assets/images/cta-bg.jpg) no-repeat;
     background-size: cover;
     background-position: center;
     padding: 50px 30px;
@@ -669,7 +669,7 @@
 }
 
 footer .footer-top{
-    background: url(../images/footer-bg.jpg) no-repeat;
+    background: url(../assets/images/footer-bg.jpg) no-repeat;
     background-size: cover;
     background-position: center;
     padding: 50px 30px;
