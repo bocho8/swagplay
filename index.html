@@ -20,13 +20,11 @@
                 <a href=""><img src="images/logoblanco.png" alt="logo" width="100px" height="100px" /></a>
             </div>
             <ul class="nav-list">
-                <li class="home"><a href="">Home</a></li>
-                <li><a href="">Movie</a></li>
-                <li><a href="">TV Show</a></li>
-                <li><a href="">Web Series</a></li>
-                <li><a href="">Pricing</a></li>
-                <li><button class="btn" id="open_login">Sign In</button></li>
-                <li><button class="btn" id="open_register">Register</button></li>
+                <li class="home"><a href="">Inicio</a></li>
+                <li><a href="">Peliculas</a></li>
+                <li><a href="">Planes</a></li>
+                <li><button class="btn" id="open_login">Ingresar</button></li>
+                <li><button class="btn" id="open_register">Registrarse</button></li>
             </ul>
             <div class="hamburger">
                 <div class="line"></div>
@@ -43,9 +41,9 @@
             <form action="login.php" method="POST" id="login_form">
                 <label for="login_email">Email:</label>
                 <input type="email" name="email" id="login_email" required>
-                <label for="login_password">Password:</label>
-                <input type="password" name="password" id="login_password" minlength="8" required>
-                <button type="submit">Login</button>
+                <label for="login_contrasena">contrasena:</label>
+                <input type="contrasena" name="contrasena" id="login_contrasena" minlength="8" required>
+                <button type="submit">ingresar</button>
             </form>
         </div>
     </div>
@@ -53,17 +51,17 @@
     <div id="register_modal" class="modal">
         <div class="modal-content">
             <span class="close" id="close_register">&times;</span>
-            <h2>Register</h2>
+            <h2>Registrarse</h2>
             <form action="register.php" method="POST" id="register_form">
-                <label for="register_fullname">Full Name:</label>
-                <input type="text" name="fullname" id="register_fullname" required>
+                <label for="register_nombre">Nombre Completo:</label>
+                <input type="text" name="nombre" id="register_nombre" required>
                 <label for="register_email">Email:</label>
                 <input type="email" name="email" id="register_email" required>
-                <label for="register_password">Password:</label>
-                <input type="password" name="password" id="register_password" minlength="8" required>
-                <label for="register_phone">Phone:</label>
-                <input type="tel" name="phone" id="register_phone" required>
-                <button type="submit">Register</button>
+                <label for="register_contrasena">Contrasena:</label>
+                <input type="contrasena" name="contrasena" id="register_contrasena" minlength="8" required>
+                <label for="register_telefono">Telefono:</label>
+                <input type="tel" name="telefono" id="register_telefono" required>
+                <button type="submit">Registrarse</button>
             </form>
         </div>
     </div>
@@ -72,25 +70,9 @@
       <div class="main">
         <div class="content">
           <p>SwagPlay</p>
-          <h1>Unlimited <strong>Movies</strong>, TV Shows, & More.</h1>
+          <h1>Peliculas <strong>Ilimitadas</strong>, & More.</h1>
           <div class="meta-wrapper">
-            <div class="badge">
-              <span>PG 18</span>
-              <span>HD</span>
-            </div>
-            <div class="genre">
-              <span><a href="">Romance,</a> <a href="">Drama</a></span>
-            </div>
-            <div class="date-time">
-              <span><i class="fa-solid fa-calendar-days"></i> 2022</span>
-              <span><i class="fa-regular fa-clock"></i> 128 min</span>
-            </div>
-          </div>
-          <div class="watch-btn">
-            <button><i class="fa-solid fa-play"></i> Watch Now</button>
-          </div>
-        </div>
-      </div>
+
     </section>
 
     <footer>
@@ -99,9 +81,9 @@
           <div class="links">
             <div class="text-links">
               <a href="">faq</a>
-              <a href="">help center</a>
-              <a href="">terms of use</a>
-              <a href="">privacy</a>
+              <a href="">centro de ayuda</a>
+              <a href="">TOS</a>
+              <a href="">privacidad</a>
             </div>
             <div class="social-links">
               <a href=""><i class="fa-brands fa-facebook"></i></a>
@@ -113,7 +95,7 @@
         </div>
         <div class="footer-bottom">
           <div class="copyright">
-            <p>&#169; 2024 <a href="">SwagPlay</a>. All Rights Reserved</p>
+            <p>&#169; 2024 <a href="">SwagPlay</a>. Todos los derechos reservados</p>
           </div>
           <div class="img">
             <img src="images/footer-bottom-img.png" alt="">
