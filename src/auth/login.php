@@ -1,13 +1,12 @@
 <?php
-include 'db_connect.php';
+include '../config/db_connect.php';
 
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    $password = $_POST['password'];
+    $password = $_POST['contrasena'];
 
-    // Validar email y contraseña
     if (!$email) {
         echo "Agregue un email valido.";
         exit();
@@ -17,22 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Buscar el usuario en la base de datos
-    $sql = "SELECT id, fullname, password FROM users WHERE email = '$email'";
+    $sql = "SELECT email, contrasena FROM usuario WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $stored_hashed_password = $row['password'];
+        $stored_hashed_password = $row['contrasena'];
 
         // Verificar la contraseña
         if (password_verify($password, $stored_hashed_password)) {
             // Establecer variables de sesión
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['fullname'] = $row['fullname'];
+            $_SESSION['email'] = $row['email'];
             header("Location: welcome.php");
             exit();
         } else {
             echo "Credenciales de inicio de sesión inválidas.";
+            echo "$stored_hashed_password ~= $password";
         }
     } else {
         echo "Credenciales de inicio de sesión inválidas.";

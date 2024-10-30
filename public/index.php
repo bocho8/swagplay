@@ -41,8 +41,8 @@
             <form action="../src/auth/login.php" method="POST" id="login_form">
                 <label for="login_email">Email:</label>
                 <input type="email" name="email" id="login_email" required>
-                <label for="login_contrasena">contrasena:</label>
-                <input type="contrasena" name="contrasena" id="login_contrasena" minlength="8" required>
+                <label for="login_contrasena">Contraseña:</label>
+                <input type="password" name="contrasena" id="login_contrasena" minlength="8" required>
                 <button type="submit">ingresar</button>
             </form>
         </div>
@@ -53,12 +53,10 @@
             <span class="close" id="close_register">&times;</span>
             <h2>Registrarse</h2>
             <form action="../src/auth/register.php" method="POST" id="register_form">
-                <label for="register_nombre">Nombre Completo:</label>
-                <input type="text" name="nombre" id="register_nombre" required>
                 <label for="register_email">Email:</label>
                 <input type="email" name="email" id="register_email" required>
-                <label for="register_contrasena">Contrasena:</label>
-                <input type="contrasena" name="contrasena" id="register_contrasena" minlength="8" required>
+                <label for="register_contrasena">Contraseña:</label>
+                <input type="password" name="contrasena" id="register_contrasena" minlength="8" required>
                 <label for="register_telefono">Telefono:</label>
                 <input type="tel" name="telefono" id="register_telefono" required>
                 <button type="submit">Registrarse</button>

@@ -1,19 +1,12 @@
 <?php
-include 'db_connect.php';
+include '../config/db_connect.php';
 
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = $_POST['nombre'];
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
     $contrasena = $_POST['contrasena'];
     $telefono = $_POST['telefono'];
-
-    // Validar
-    if (!preg_match("/^[A-Z][a-z]+ [A-Za-z]+$/", $nombre)) {
-        echo "El nombre completo debe comenzar con una letra mayúscula y tener un apellido..";
-        exit();
-    }
 
     if(!$email){
         echo "Agregue un email valido.";
@@ -28,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $hashed_contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
 
-    $sql = "INSERT INTO users (nombre, email, contrasena, telefono) VALUES ('$nombre', '$email', '$hashed_contrasena', '$telefono')";
+    $sql = "INSERT INTO `usuario` (`email`, `contrasena`, `numero_tarjeta`, `codigo_verificador`, `nombre_tarjeta`, `telefono`, `cuidad`, `pais`) VALUES ('$email', '$hashed_contrasena', NULL, NULL, NULL, '$telefono ', NULL, NULL);";
     
     if ($conn->query($sql) === TRUE) {
-        header("Location: index.html");
+        header("Location: ../../public/index.php");
         exit();
     } else {
         echo "Error al registrar el usuario: " . $conn->error;
