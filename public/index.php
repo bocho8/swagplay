@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <a href=""><img src="assets\images\logos\logoblanco.png" alt="logo" width="100px" height="100px" /></a>
+                <a href=""><img src="assets/images/logos/logoblanco.png" alt="logo" width="100px" height="100px" /></a>
             </div>
             <ul class="nav-list">
                 <li class="home"><a href="">Inicio</a></li>
@@ -38,7 +38,7 @@
         <div class="modal-content">
             <span class="close" id="close_login">&times;</span>
             <h2>Login</h2>
-            <form action="..\src\auth\login.php" method="POST" id="login_form">
+            <form action="../src/auth/login.php" method="POST" id="login_form">
                 <label for="login_email">Email:</label>
                 <input type="email" name="email" id="login_email" required>
                 <label for="login_contrasena">contrasena:</label>
@@ -52,7 +52,7 @@
         <div class="modal-content">
             <span class="close" id="close_register">&times;</span>
             <h2>Registrarse</h2>
-            <form action="..\src\auth\register.php" method="POST" id="register_form">
+            <form action="../src/auth/register.php" method="POST" id="register_form">
                 <label for="register_nombre">Nombre Completo:</label>
                 <input type="text" name="nombre" id="register_nombre" required>
                 <label for="register_email">Email:</label>
@@ -72,7 +72,6 @@
           <p>SwagPlay</p>
           <h1>Peliculas <strong>Ilimitadas</strong>, & More.</h1>
           <div class="meta-wrapper">
-
     </section>
 
     <footer>
@@ -98,7 +97,7 @@
             <p>&#169; 2024 <a href="">SwagPlay</a>. Todos los derechos reservados</p>
           </div>
           <div class="img">
-            <img src="assets\images\backgrounds\footer-bottom-img.png" alt="">
+            <img src="assets/images/backgrounds/footer-bottom-img.png" alt="">
           </div>
         </div>
       </div>
