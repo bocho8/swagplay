@@ -29,9 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email'] = $row['email'];
             header("Location: welcome.php");
             exit();
-        } else {
-            echo "Credenciales de inicio de sesión inválidas.";
-            echo "$stored_hashed_password ~= $password";
         }
     } else {
         echo "Credenciales de inicio de sesión inválidas.";
