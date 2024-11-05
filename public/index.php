@@ -38,13 +38,14 @@
         <div class="modal-content">
             <span class="close" id="close_login">&times;</span>
             <h2>Login</h2>
-            <form action="../src/auth/login.php" method="POST" id="login_form">
+            <form id="login_form">
                 <label for="login_email">Email:</label>
                 <input type="email" name="email" id="login_email" required>
                 <label for="login_contrasena">Contraseña:</label>
                 <input type="password" name="contrasena" id="login_contrasena" minlength="8" required>
-                <button type="submit">ingresar</button>
+                <button type="submit">Ingresar</button>
             </form>
+            <div id="login_response" class="response"></div>
         </div>
     </div>
 
@@ -52,7 +53,7 @@
         <div class="modal-content">
             <span class="close" id="close_register">&times;</span>
             <h2>Registrarse</h2>
-            <form action="../src/auth/register.php" method="POST" id="register_form">
+            <form id="register_form">
                 <label for="register_email">Email:</label>
                 <input type="email" name="email" id="register_email" required>
                 <label for="register_contrasena">Contraseña:</label>
@@ -61,6 +62,7 @@
                 <input type="tel" name="telefono" id="register_telefono" required>
                 <button type="submit">Registrarse</button>
             </form>
+            <div id="register_response" class="response"></div>
         </div>
     </div>
 
@@ -106,5 +108,36 @@
     <script src="js/script.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/login.js"></script>
+    <script>
+        document.getElementById("login_form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch("src/auth/login.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("login_response").innerHTML = data;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+
+        document.getElementById("register_form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch("src/auth/register.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("register_response").innerHTML = data;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
   </body>
 </html>

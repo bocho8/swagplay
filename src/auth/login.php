@@ -15,27 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Buscar el usuario en la base de datos
     $sql = "SELECT email, contrasena FROM usuario WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $stored_hashed_password = $row['contrasena'];
-
-        // Verificar la contraseña
-        if (password_verify($password, $stored_hashed_password)) {
-            // Establecer variables de sesión
-            if(!isset($_SESSION['is_logged_in'])){
-                $_SESSION['is_logged_in'] = 1;
-            }
-
-            if(!isset($_SESSION['email'])){
-                $_SESSION['email'] = 1;
-            }
-
-            header("Location: welcome.php");
-            exit();
+        if (password_verify($password, $row['contrasena'])) {
+            $_SESSION['is_logged_in'] = 1;
+            $_SESSION['email'] = $email;
+            header("Location: ../views/welcome.php");
+        } else {
+            echo "Credenciales de inicio de sesión inválidas.";
         }
     } else {
         echo "Credenciales de inicio de sesión inválidas.";
