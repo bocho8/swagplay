@@ -26,7 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verificar la contraseña
         if (password_verify($password, $stored_hashed_password)) {
             // Establecer variables de sesión
-            $_SESSION['email'] = $row['email'];
+            if(!isset($_SESSION['is_logged_in'])){
+                $_SESSION['is_logged_in'] = 1;
+            }
+
+            if(!isset($_SESSION['email'])){
+                $_SESSION['email'] = 1;
+            }
+
             header("Location: welcome.php");
             exit();
         }
