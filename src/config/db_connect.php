@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "swagplay_db";
+$dbname = "swagplay";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
