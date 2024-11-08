@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /swagplay/
+
+# Bypass rewrite for any requests that contain "/src/" or "/public/"
+RewriteCond %{REQUEST_URI} ^/swagplay/src/ [OR]
+RewriteCond %{REQUEST_URI} ^/swagplay/public/ [NC]
+RewriteRule ^ - [L]
+
+# Route all other requests to the "public" folder
+RewriteRule ^(.*)$ public/$1 [L]
