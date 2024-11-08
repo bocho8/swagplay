@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO `usuario` (`email`, `contrasena`, `numero_tarjeta`, `codigo_verificador`, `nombre_tarjeta`, `telefono`, `cuidad`, `pais`) VALUES ('$email', '$hashed_contrasena', NULL, NULL, NULL, '$telefono ', NULL, NULL);";
     
     if ($conn->query($sql) === TRUE) {
-        header("Location: ../../public/index.php");
+        header("Location: ../../src/views/planes.html");
         exit();
     } else {
         echo "Error al registrar el usuario: " . $conn->error;
