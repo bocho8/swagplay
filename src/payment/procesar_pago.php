@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once '../src/config/db_connect.php';
 
 if (isset($_SESSION['email']) && isset($_POST['pantallas'])) {
     $email = $_SESSION['email'];
@@ -11,7 +11,7 @@ if (isset($_SESSION['email']) && isset($_POST['pantallas'])) {
     $stmt->bind_param("is", $pantallas, $email);
 
     if ($stmt->execute()) {
-        header("Location: dashboard.php"); // Redirige al dashboard del usuario
+        header("Location: usuario.php"); // Redirige al dashboard del usuario
     } else {
         echo "Error al actualizar el plan: " . $stmt->error;
     }

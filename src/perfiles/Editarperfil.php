@@ -1,0 +1,63 @@
+<?php
+session_start();
+include('../config/db_connect.php');
+
+if (isset($_GET['user'])) {
+    $nombre = mysqli_real_escape_string($conex, $_GET['user']);
+    $email = $_SESSION['email'];
+    
+    $consulta = "SELECT * FROM perfiles WHERE nombre='$nombre' AND email_cliente='$email'";
+    $resultado = mysqli_query($conex, $consulta);
+
+    if ($resultado) {
+        $perfil = mysqli_fetch_assoc($resultado);
+    } else {
+        die('Error al consultar el perfil: ' . mysqli_error($conex));
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre_actualizado = mysqli_real_escape_string($conex, $_POST['nombre']);
+    $imagen_actualizada = mysqli_real_escape_string($conex, $_POST['imagen_perfil']);
+    $email = $_SESSION['email'];
+    
+    $consulta_actualizar = "UPDATE perfiles SET nombre='$nombre_actualizado' WHERE nombre='$nombre' AND email_cliente='$email'";
+    
+    if (mysqli_query($conex, $consulta_actualizar)) {
+        header("Location: Usuario.php");
+        exit();
+    } else {
+        echo "Error al actualizar el perfil: " . mysqli_error($conex);
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Usuario.css">
+    <link rel="Icon" href="imagenes/V.png" type="image/x-icon">
+
+    <title>Editar Perfil</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Perfil</h1>
+        <form action="EditarPerfil.php?user=<?php echo urlencode($nombre); ?>" method="post">
+            <input type="text" name="nombre" value="<?php echo htmlspecialchars($perfil['nombre']); ?>" required>
+            <!-- Imagenes de perfil -->
+            <h3>Selecciona una imagen de perfil</h3>
+            <div class="image-options">
+                <label>
+                    <input type="radio" name="imagen_perfil" value="PerfilH.png" <?php if ($perfil['imagen'] == 'PerfilH.png') echo 'checked'; ?>>
+                    <img src="imagenes/PerfilH.png" alt="Perfil 1" class="selectable-img">
+                </label>
+                <!-- Añade más opciones de imagen según sea necesario -->
+            </div>
+            <input type="submit" value="Actualizar Perfil">
+        </form>
+    </div>
+</body>
+</html>
