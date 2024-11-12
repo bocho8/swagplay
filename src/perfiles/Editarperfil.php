@@ -37,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Usuario.css">
-    <link rel="Icon" href="imagenes/V.png" type="image/x-icon">
 
     <title>Editar Perfil</title>
 </head>
@@ -46,11 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Editar Perfil</h1>
         <form action="EditarPerfil.php?user=<?php echo urlencode($nombre); ?>" method="post">
             <input type="text" name="nombre" value="<?php echo htmlspecialchars($perfil['nombre']); ?>" required>
-            <!-- Imagenes de perfil -->
-            <h3>Selecciona una imagen de perfil</h3>
-            <div class="image-options">
-                <!-- Añade más opciones de imagen según sea necesario -->
-            </div>
             <input type="submit" value="Actualizar Perfil">
         </form>
     </div>
