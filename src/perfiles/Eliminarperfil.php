@@ -7,18 +7,18 @@ $email = $_SESSION['email'];
 if (isset($_GET['nombre'])) {
     $nombre_perfil = $_GET['nombre'];
 
-    $consulta_cuenta_perfiles = "SELECT COUNT(*) as total FROM perfiles WHERE email_cliente='$email'";
+    $consulta_cuenta_perfiles = "SELECT COUNT(*) as total FROM perfiles WHERE email='$email'";
     $resultado_cuenta = mysqli_query($conn, $consulta_cuenta_perfiles);
 
     if ($resultado_cuenta) {
         $fila_cuenta = mysqli_fetch_assoc($resultado_cuenta);
 
         if ($fila_cuenta['total'] > 1) {
-            $consulta_perfil = "SELECT * FROM perfiles WHERE nombre='$nombre_perfil' AND email_cliente='$email'";
+            $consulta_perfil = "SELECT * FROM perfiles WHERE nombre='$nombre_perfil' AND email='$email'";
             $resultado_perfil = mysqli_query($conn, $consulta_perfil);
 
             if (mysqli_num_rows($resultado_perfil) > 0) {
-                $eliminar_perfil = "DELETE FROM perfiles WHERE nombre='$nombre_perfil' AND email_cliente='$email'";
+                $eliminar_perfil = "DELETE FROM perfiles WHERE nombre='$nombre_perfil' AND email='$email'";
                 if (mysqli_query($conn, $eliminar_perfil)) {
                     header("Location: Usuario.php");
                     exit();

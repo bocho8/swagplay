@@ -15,11 +15,6 @@ while ($perfil = mysqli_fetch_assoc($resultado_perfiles)) {
     $perfiles[] = $perfil;
 }
 
-$imagen_default = 'PerfilH.png';
-
-if (isset($_GET['error']) && $_GET['error'] == 'ultimo_perfil') {
-    echo "<p style='color: red; text-align: center;'>No puedes eliminar el último perfil.</p>";
-}
 ?>
 
 <!DOCTYPE html>
@@ -38,11 +33,6 @@ if (isset($_GET['error']) && $_GET['error'] == 'ultimo_perfil') {
         <div class="profile-list">
             <?php foreach ($perfiles as $usuario): ?>
             <div class="profile-card">
-                <a href="pagina_de_redireccion.php">
-                    <div class="profile-image">
-                        <img src="imagenes/<?php echo htmlspecialchars($imagen_default); ?>" alt="Imagen de perfil" class="profile-img">
-                    </div>
-                </a>
                 <h2><?php echo htmlspecialchars($usuario['nombre']); ?></h2>
                 <button onclick="location.href='EditarPerfil.php?user=<?php echo urlencode($usuario['nombre']); ?>'">Modificar</button>
                 <button onclick="location.href='EliminarPerfil.php?nombre=<?php echo urlencode($usuario['nombre']); ?>'">Eliminar</button>
@@ -53,7 +43,7 @@ if (isset($_GET['error']) && $_GET['error'] == 'ultimo_perfil') {
         <?php if (count($perfiles) < 4): ?>
         <div class="create-profile">
             <h2>Crear nuevo perfil</h2>
-            <form action="Crearperfil.php" method="post">
+            <form action="src/perfiles/Crearperfil.php" method="post">
                 <input type="text" name="nombre" placeholder="Nombre del perfil" required>
                 <input type="submit" value="Crear Perfil">
             </form>
