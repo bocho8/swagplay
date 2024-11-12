@@ -3,31 +3,31 @@ session_start();
 include('../config/db_connect.php');
 
 if (isset($_GET['user'])) {
-    $nombre = mysqli_real_escape_string($conex, $_GET['user']);
+    $nombre = mysqli_real_escape_string($conn, $_GET['user']);
     $email = $_SESSION['email'];
     
     $consulta = "SELECT * FROM perfiles WHERE nombre='$nombre' AND email_cliente='$email'";
-    $resultado = mysqli_query($conex, $consulta);
+    $resultado = mysqli_query($conn, $consulta);
 
     if ($resultado) {
         $perfil = mysqli_fetch_assoc($resultado);
     } else {
-        die('Error al consultar el perfil: ' . mysqli_error($conex));
+        die('Error al consultar el perfil: ' . mysqli_error($conn));
     }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre_actualizado = mysqli_real_escape_string($conex, $_POST['nombre']);
-    $imagen_actualizada = mysqli_real_escape_string($conex, $_POST['imagen_perfil']);
+    $nombre_actualizado = mysqli_real_escape_string($conn, $_POST['nombre']);
+    $imagen_actualizada = mysqli_real_escape_string($conn, $_POST['imagen_perfil']);
     $email = $_SESSION['email'];
     
     $consulta_actualizar = "UPDATE perfiles SET nombre='$nombre_actualizado' WHERE nombre='$nombre' AND email_cliente='$email'";
     
-    if (mysqli_query($conex, $consulta_actualizar)) {
+    if (mysqli_query($conn, $consulta_actualizar)) {
         header("Location: Usuario.php");
         exit();
     } else {
-        echo "Error al actualizar el perfil: " . mysqli_error($conex);
+        echo "Error al actualizar el perfil: " . mysqli_error($conn);
     }
 }
 ?>

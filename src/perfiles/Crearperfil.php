@@ -13,7 +13,7 @@ if (!in_array($imagen_perfil, ['PerfilH.png', 'PerfilH2.png', 'Perfilw.png'])) {
 
 // Limitar a 4 perfiles por usuario
 $consulta_perfiles = "SELECT COUNT(*) as total FROM perfiles WHERE email_cliente='$email'";
-$resultado_perfiles = mysqli_query($conex, $consulta_perfiles);
+$resultado_perfiles = mysqli_query($conn, $consulta_perfiles);
 $total_perfiles = mysqli_fetch_assoc($resultado_perfiles)['total'];
 
 if ($total_perfiles >= 4) {
@@ -22,11 +22,11 @@ if ($total_perfiles >= 4) {
     // Insertar el nuevo perfil
     $insertar_perfil = "INSERT INTO perfiles (nombre, email_cliente) VALUES ('$nombre_perfil', '$email')";
     
-    if (mysqli_query($conex, $insertar_perfil)) {
+    if (mysqli_query($conn, $insertar_perfil)) {
         header("Location: Usuario.php");
         exit();
     } else {
-        echo "Error al crear el perfil: " . mysqli_error($conex);
+        echo "Error al crear el perfil: " . mysqli_error($conn);
     }
 }
 ?>

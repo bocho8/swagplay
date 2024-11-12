@@ -4,10 +4,10 @@ include('../config/db_connect.php');
 
 $email = $_SESSION['email'];
 $consulta_perfiles = "SELECT nombre FROM perfiles WHERE email_cliente='$email' LIMIT 4";
-$resultado_perfiles = mysqli_query($conex, $consulta_perfiles);
+$resultado_perfiles = mysqli_query($conn, $consulta_perfiles);
 
 if (!$resultado_perfiles) {
-    die('Error en la consulta: ' . mysqli_error($conex));
+    die('Error en la consulta: ' . mysqli_error($conn));
 }
 
 $perfiles = [];
