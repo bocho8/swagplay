@@ -53,7 +53,7 @@ if (isset($_GET['error']) && $_GET['error'] == 'ultimo_perfil') {
         <?php if (count($perfiles) < 4): ?>
         <div class="create-profile">
             <h2>Crear nuevo perfil</h2>
-            <form action="crearperfil.php" method="post">
+            <form action="Crearperfil.php" method="post">
                 <input type="text" name="nombre" placeholder="Nombre del perfil" required>
                 <input type="submit" value="Crear Perfil">
             </form>
