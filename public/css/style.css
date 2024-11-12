@@ -135,6 +135,13 @@
   transition: 0.3s ease-in-out;
 }
 
+.welcome-message {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+}
+
 .navbar ul .btn {
   background-color: #1d1a28;
   border: 2px solid #e2d703;

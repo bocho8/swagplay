@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $row['contrasena'])) {
             $_SESSION['is_logged_in'] = 1;
             $_SESSION['email'] = $email;
-            header("Location: ../perfiles/Usuario.php");
+            echo "success";
         } else {
             echo "Credenciales de inicio de sesión inválidas.";
         }

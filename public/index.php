@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,8 +27,17 @@
                 <li class="home"><a href="">Inicio</a></li>
                 <li><a href="">Peliculas</a></li>
                 <li><a href="">Planes</a></li>
-                <li><button class="btn" id="open_login">Ingresar</button></li>
-                <li><button class="btn" id="open_register">Registrarse</button></li>
+
+                <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] == 1): ?>
+                  <?php 
+                    $username = explode('@', $_SESSION['email'])[0]; 
+                  ?>
+                  <li><span class="welcome-message">Bienvenido, <?php echo htmlspecialchars($username); ?>!</span></li>
+                  <li><button class="btn" id="logout_button">Cerrar Sesión</button></li>
+                <?php else: ?>
+                    <li><button class="btn" id="open_login">Ingresar</button></li>
+                    <li><button class="btn" id="open_register">Registrarse</button></li>
+                <?php endif; ?>
             </ul>
             <div class="hamburger">
                 <div class="line"></div>
@@ -72,6 +85,9 @@
           <p>SwagPlay</p>
           <h1>Peliculas <strong>Ilimitadas</strong>, & More.</h1>
           <div class="meta-wrapper">
+          </div>
+        </div>
+      </div>
     </section>
 
     <footer>
@@ -110,19 +126,25 @@
     <script src="js/login.js"></script>
     <script>
         document.getElementById("login_form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
+          event.preventDefault();
+    
+          const formData = new FormData(this);
 
-            fetch("src/auth/login.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("login_response").innerHTML = data;
-            })
-            .catch(error => console.error("Error:", error));
+          fetch("src/auth/login.php", {
+              method: "POST",
+              body: formData
+          })
+          .then(response => response.text())
+          .then(data => {
+              if (data === "success") {
+                  window.location.href = "index.php";
+              } else {
+                  document.getElementById("login_response").innerHTML = data;
+              }
+          })
+          .catch(error => console.error("Error:", error));
         });
+
 
         document.getElementById("register_form").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -138,6 +160,12 @@
             })
             .catch(error => console.error("Error:", error));
         });
+
+        document.getElementById("logout_button")?.addEventListener("click", function() {
+            fetch("src/auth/logout.php", { method: "POST" })
+                .then(() => location.reload())
+                .catch(error => console.error("Error:", error));
+        });
     </script>
-  </body>
+</body>
 </html>
