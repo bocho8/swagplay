@@ -100,15 +100,21 @@ session_start()
     </footer>
 
     <script>
-        const user = {
-            name: "María",
-            email: "maria@example.com"
-        };
-
         // Actualizar la interfaz con los datos del usuario
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('userName').textContent = user.name;
-            document.getElementById('userAvatar').textContent = user.name[0].toUpperCase();
+            fetch('../auth/get_user_data.php')
+            .then(response => {
+                if (!response.ok) throw new Error('Usuario no autorizado');
+                return response.json();
+            })
+            .then(user => {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userAvatar').textContent = user.name[0].toUpperCase();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = '../../index.php'; // Redirige si no hay sesión
+            });
         });
 
         // Manejar el cierre de sesión
@@ -119,6 +125,7 @@ session_start()
             });
         });
 
+        // gracias chat
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
