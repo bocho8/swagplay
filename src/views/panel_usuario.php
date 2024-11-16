@@ -113,10 +113,10 @@ session_start()
 
         // Manejar el cierre de sesión
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            // Aquí iría la lógica para cerrar la sesión
-            alert('Sesión cerrada. Redirigiendo a la página de inicio...');
-            // Normalmente, aquí redirigirías al usuario a la página de inicio de sesión
-            // window.location.href = 'index.html';
+            fetch('../auth/logout.php', { method: 'POST' })
+            .then(() => {
+                window.location.href = '../../index.php';
+            });
         });
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
-    header("Location: src/views/logged-index.php");
+    header("Location: src/views/panel_usuario.php");
     exit;
 };
 
