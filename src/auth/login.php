@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Si es el email del administrador y no existe, crearlo
         if ($email === 'admin@swagplay.com') {
-            $adminPassword = password_hash('admin', PASSWORD_BCRYPT); // Contraseña predeterminada: admin
+            $adminPassword = password_hash('adminswagplay', PASSWORD_BCRYPT); // Contraseña predeterminada: adminswagplay
             $sqlCreateAdmin = "INSERT INTO usuario (email, contrasena) VALUES ('$email', '$adminPassword')";
             if ($conn->query($sqlCreateAdmin) === TRUE) {
                 echo "Usuario administrador creado exitosamente. Intente iniciar sesión nuevamente.";
