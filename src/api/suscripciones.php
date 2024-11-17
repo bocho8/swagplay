@@ -1,6 +1,5 @@
 <?php
-// api/suscripciones.php
-include '../../config/db_connect.php';
+include '../config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {
