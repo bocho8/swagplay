@@ -22,7 +22,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "INSERT INTO usuario (email, contrasena, telefono, cuidad, pais) 
-                VALUES ('$data[email]', '" . password_hash($data['contrasena'], PASSWORD_DEFAULT) . "', '$data[telefono]', '$data[cuidad]', '$data[pais]')";
+                VALUES ('$data[email]', '" . password_hash($data['contrasena'], PASSWORD_BCRYPT) . "', '$data[telefono]', '$data[cuidad]', '$data[pais]')";
         echo json_encode(['success' => $conn->query($sql)]);
         break;
 

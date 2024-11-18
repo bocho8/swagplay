@@ -173,15 +173,14 @@ function cargarPeliculas() {
 
 // Función para agregar película
 function agregarPelicula() {
-    const pelicula = {
-        titulo: prompt('Título de la película:'),
-        descripcion: prompt('Descripción:'),
-        calificacion_usuarios: parseFloat(prompt('Calificación de usuarios:')),
-        foto: prompt('Ruta de la foto:'),
-        lanzamiento: prompt('Fecha de lanzamiento (YYYY-MM-DD):')
-    };
+    const titulo = document.getElementById('titulo').value
+    const descripcion = document.getElementById('titulo').value
+    const calificacion_usuarios = document.getElementById('titulo').value
+    const foto = document.getElementById('titulo').value
+    const lanzamiento = document.getElementById('titulo').value
 
-    if (pelicula.titulo && pelicula.descripcion && !isNaN(pelicula.calificacion_usuarios)) {
+    if (titulo && descripcion && !isNaN(calificacion_usuarios)) {
+        const pelicula = { titulo, descripcion, calificacion_usuarios, foto, lanzamiento }
         fetch('../api/peliculas.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -191,6 +190,7 @@ function agregarPelicula() {
         .then(() => {
             cargarPeliculas();
             showNotification('Película agregada exitosamente');
+            document.getElementById('peliculaForm').reset();
         })
         .catch(err => showNotification('Error al agregar película', true));
     }
@@ -221,8 +221,8 @@ function cargarCategorias() {
         const tbody = document.getElementById('categoriasTabla');
         tbody.innerHTML = data.categorias.map(categoria => `
             <tr>
-                <td>${categoria.nombre}</td>
-                <td>${categoria.descripcion}</td>
+                <td>${categoria.categoria}</td>
+                <td>${categoria.idPelicula}</td>
                 <td>
                     <button onclick="editarCategoria(${categoria.id_categoria})">Editar</button>
                     <button onclick="eliminarCategoria(${categoria.id_categoria})">Eliminar</button>
@@ -235,16 +235,15 @@ function cargarCategorias() {
 
 // Función para agregar categoría
 function agregarCategoria() {
-    const categoria = {
-        nombre: prompt('Nombre de la categoría:'),
-        descripcion: prompt('Descripción:')
-    };
 
-    if (categoria.nombre && categoria.descripcion) {
+    const categoria = document.getElementById('categoria').value
+    const idPelicula = document.getElementById('idPelicula').value
+
+    if (categoria && idPelicula) {
         fetch('../api/categorias.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(categoria)
+            body: JSON.stringify({categoria, idPelicula})
         })
         .then(res => res.json())
         .then(() => {
@@ -256,9 +255,9 @@ function agregarCategoria() {
 }
 
 // Función para eliminar categoría
-function eliminarCategoria(id_categoria) {
+function eliminarCategoria(id_pelicula) {
     if (confirm('¿Está seguro de eliminar esta categoría?')) {
-        fetch(`../api/categorias.php?id_categoria=${id_categoria}`, {
+        fetch(`../api/categorias.php?id_pelicula=${id_pelicula}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -280,8 +279,8 @@ function cargarPerfiles() {
         const tbody = document.getElementById('perfilesTabla');
         tbody.innerHTML = data.perfiles.map(perfil => `
             <tr>
-                <td>${perfil.nombre}</td>
-                <td>${perfil.usuario}</td>
+                <td>${perfil.nombrePerfil}</td>
+                <td>${perfil.emailPerfil}</td>
                 <td>
                     <button onclick="editarPerfil(${perfil.id_perfil})">Editar</button>
                     <button onclick="eliminarPerfil(${perfil.id_perfil})">Eliminar</button>
@@ -295,11 +294,11 @@ function cargarPerfiles() {
 // Función para agregar perfil
 function agregarPerfil() {
     const perfil = {
-        nombre: prompt('Nombre del perfil:'),
-        usuario: prompt('Usuario asociado:')
+        nombre: document.getElementById('nombrePerfil').value,
+        email: document.getElementById('emailPerfil').value
     };
 
-    if (perfil.nombre && perfil.usuario) {
+    if (perfil.nombre && perfil.email) {
         fetch('../api/perfiles.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -339,10 +338,9 @@ function cargarSuscripciones() {
         const tbody = document.getElementById('suscripcionesTabla');
         tbody.innerHTML = data.suscripciones.map(suscripcion => `
             <tr>
-                <td>${suscripcion.usuario}</td>
-                <td>${suscripcion.plan}</td>
-                <td>${suscripcion.fecha_inicio}</td>
-                <td>${suscripcion.fecha_fin}</td>
+                <td>${suscripcion.pantallasSimultaneas}</td>
+                <td>${suscripcion.nombreSuscripcion}</td>
+                <td>${suscripcion.emailSuscripcion}</td>
                 <td>
                     <button onclick="editarSuscripcion(${suscripcion.id_suscripcion})">Editar</button>
                     <button onclick="eliminarSuscripcion(${suscripcion.id_suscripcion})">Eliminar</button>
@@ -356,13 +354,12 @@ function cargarSuscripciones() {
 // Función para agregar suscripción
 function agregarSuscripcion() {
     const suscripcion = {
-        usuario: prompt('Usuario:'),
-        plan: prompt('Plan:'),
-        fecha_inicio: prompt('Fecha de inicio (YYYY-MM-DD):'),
-        fecha_fin: prompt('Fecha de fin (YYYY-MM-DD):')
+        pantallas: document.getElementById('pantallasSimultaneas').value,
+        nombre: document.getElementById('nombreSuscripcion').value,
+        email: document.getElementById('emailSuscripcion').value
     };
 
-    if (suscripcion.usuario && suscripcion.plan && suscripcion.fecha_inicio && suscripcion.fecha_fin) {
+    if (suscripcion.pantallas && suscripcion.nombre && suscripcion.email) {
         fetch('../api/suscripciones.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -378,9 +375,9 @@ function agregarSuscripcion() {
 }
 
 // Función para eliminar suscripción
-function eliminarSuscripcion(id_suscripcion) {
+function eliminarSuscripcion(email) {
     if (confirm('¿Está seguro de eliminar esta suscripción?')) {
-        fetch(`../api/suscripciones.php?id_suscripcion=${id_suscripcion}`, {
+        fetch(`../api/suscripciones.php?email=${email}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -402,9 +399,10 @@ function cargarVisualizaciones() {
         const tbody = document.getElementById('visualizacionesTabla');
         tbody.innerHTML = data.visualiza.map(visualizacion => `
             <tr>
-                <td>${visualizacion.usuario}</td>
-                <td>${visualizacion.pelicula}</td>
-                <td>${visualizacion.fecha}</td>
+                <td>${visualizacion.emailVisualizacion}</td>
+                <td>${visualizacion.idPeliculaVisualizacion}</td>
+                <td>${visualizacion.calificacionVisualizacion}</td>
+                <td>${visualizacion.segundoPelicula}</td>
                 <td>
                     <button onclick="editarVisualizacion(${visualizacion.id_visualizacion})">Editar</button>
                     <button onclick="eliminarVisualizacion(${visualizacion.id_visualizacion})">Eliminar</button>
@@ -418,12 +416,13 @@ function cargarVisualizaciones() {
 // Función para agregar visualización
 function agregarVisualizacion() {
     const visualizacion = {
-        usuario: prompt('Usuario:'),
-        pelicula: prompt('Pelicula:'),
-        fecha: prompt('Fecha de visualización (YYYY-MM-DD):')
+        email: document.getElementById('emailVisualizacion').value,
+        idPelicula: document.getElementById('idPeliculaVisualizacion').value,
+        califcacion: document.getElementById('calificacionVisualizacion').value,
+        segundoPelicula: document.getElementById('segundoPelicula').value
     };
 
-    if (visualizacion.usuario && visualizacion.pelicula && visualizacion.fecha) {
+    if (visualizacion.email && visualizacion.idPelicula && visualizacion.califcacion && visualizacion.segundoPelicula) {
         fetch('../api/visualiza.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -439,9 +438,9 @@ function agregarVisualizacion() {
 }
 
 // Función para eliminar visualización
-function eliminarVisualizacion(id_visualizacion) {
+function eliminarVisualizacion(email, id_pelicula) {
     if (confirm('¿Está seguro de eliminar esta visualización?')) {
-        fetch(`../api/visualiza.php?id_visualizacion=${id_visualizacion}`, {
+        fetch(`../api/visualiza.php?email=${email}&id_pelicula=${id_pelicula}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
