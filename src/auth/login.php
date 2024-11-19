@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['contrasena'];
 
     if (!$email) {
-        echo "Agregue un email valido.";
+        echo "Agregue un email válido.";
         exit();
     } else if (strlen($password) < 8) {
         echo "La contraseña debe tener al menos 8 caracteres.";
@@ -28,7 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Credenciales de inicio de sesión inválidas.";
         }
     } else {
-        echo "Credenciales de inicio de sesión inválidas.";
+        // Si es el email del administrador y no existe, crearlo
+        if ($email === 'admin@swagplay.com') {
+            $adminPassword = password_hash('adminswagplay', PASSWORD_BCRYPT); // Contraseña predeterminada: adminswagplay
+            $sqlCreateAdmin = "INSERT INTO usuario (email, contrasena) VALUES ('$email', '$adminPassword')";
+            if ($conn->query($sqlCreateAdmin) === TRUE) {
+                echo "Usuario administrador creado exitosamente. Intente iniciar sesión nuevamente.";
+            } else {
+                echo "Error al crear el usuario administrador: " . $conn->error;
+            }
+        } else {
+            echo "Credenciales de inicio de sesión inválidas.";
+        }
     }
 }
 ?>

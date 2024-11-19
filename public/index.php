@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
+    header("Location: src/views/panel_usuario.php");
+    exit;
+};
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,8 +23,6 @@
             <div class="nav-links">
                 <a href="#home">Inicio</a>
                 <a href="#movies">Películas</a>
-                <a href="#tv-shows">Series</a>
-                <a href="#my-list">Mi Lista</a>
                 <div class="auth-buttons">
                     <button class="auth-button" id="loginBtn">Iniciar Sesión</button>
                     <button class="auth-button" id="registerBtn">Registrarse</button>
