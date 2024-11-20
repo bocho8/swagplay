@@ -1,9 +1,19 @@
 <?php
 session_start();
 
+$tipo_usuario = '';
+
 if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
-    header("Location: src/views/panel_usuario.php");
-    exit;
+    switch ($_SESSION["email"]) {
+        case 'admin@swagplay.com':
+            $tipo_usuario = 'admin';
+            break;
+        case preg_match('/.*(@swagplay\.com)$/', $_SESSION["email"]) ? true : false: // gracias regex101.com
+            $tipo_usuario = 'gestor';
+            break;
+        default:
+            $tipo_usuario = 'usuario';
+    }
 };
 
 ?>
@@ -15,6 +25,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Streaming de Próxima Generación</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/handle_nav.js"></script>
 </head>
 <body>
     <header>
@@ -26,8 +37,18 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 <a href="#home">Inicio</a>
                 <a href="#movies">Películas</a>
                 <div class="auth-buttons">
-                    <button class="auth-button" id="loginBtn">Iniciar Sesión</button>
-                    <button class="auth-button" id="registerBtn">Registrarse</button>
+                <?php if ($tipo_usuario == 'admin'): ?>
+                        <a href="src/views/admin_panel.php">Panel Administrador</a>
+                        <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
+                    <?php elseif($tipo_usuario == 'gestor'): ?>
+                        <a href="src/views/gestor_panel.php">Panel Gestor</a>
+                        <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
+                    <?php elseif($tipo_usuario == 'usuario'): ?>
+                        <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
+                    <?php elseif($tipo_usuario == ''): ?>
+                        <button class="auth-button" id="loginBtn">Iniciar Sesión</button>
+                        <button class="auth-button" id="registerBtn">Registrarse</button>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -119,6 +140,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
     </div>
 
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -136,6 +158,17 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
             }
         });
+
+        const logoutBtn = document.getElementById('logoutBtn');
+        console.log(logoutBtn);
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                fetch('src/auth/logout.php', { method: 'POST' })
+                .then(() => {
+                    window.location.href = 'index.php';
+                });
+            });
+        }
 
         const loginBtn = document.getElementById("loginBtn");
         const registerBtn = document.getElementById("registerBtn");
@@ -160,7 +193,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
             if (event.target == registerModal) {
                 registerModal.style.display = "none";
             }
-        }
+        };
 
         document.getElementById("loginForm").onsubmit = (e) => {
             e.preventDefault();
@@ -179,7 +212,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 }
             })
             .catch(error => console.error("Error:", error));
-        }
+        };
 
         document.getElementById("registerForm").onsubmit = (e) => {
             e.preventDefault();
@@ -198,7 +231,8 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 }
             })
             .catch(error => console.error("Error:", error));
-        }
+        };
+    });
     </script>
 </body>
 </html>

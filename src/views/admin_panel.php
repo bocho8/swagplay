@@ -3,6 +3,7 @@ session_start();
 
 if($_SESSION['email'] != 'admin@swagplay.com') {
     header("Location: ../../index.php");
+    exit;
 }
 
 ?>

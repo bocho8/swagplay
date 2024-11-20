@@ -80,6 +80,12 @@ nav {
   gap: 1rem;
 }
 
+.auth-buttons a {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
 .auth-button {
   background-color: transparent;
   border: 2px solid var(--accent-color);
