@@ -26,6 +26,14 @@ function showNotification(message, isError = false) {
     }, 10000);
 }
 
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    fetch('../auth/logout.php', { method: 'POST' })
+    .then(() => {
+        window.location.href = '../../index.php';
+    });
+    console.log('hola')
+});
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
