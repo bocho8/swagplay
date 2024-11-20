@@ -9,7 +9,7 @@ if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $sql = "SELECT id_pelicula, categoria FROM categorias";
+        $sql = "SELECT id_categoria, categoria FROM categorias";
         $result = $conn->query($sql);
         $categorias = [];
         while ($row = $result->fetch_assoc()) {
@@ -20,21 +20,31 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql = "INSERT INTO categorias (id_pelicula, categoria) 
-                VALUES ('$data[id_pelicula]', '$data[categoria]')";
-        echo json_encode(['success' => $conn->query($sql)]);
+    
+        $sqlInsertCategoria = "INSERT INTO categorias (categoria) 
+                               VALUES ('$data[categoria]')";
+        
+        echo json_encode(['success' => $conn->query($sqlInsertCategoria)]);
         break;
+        
 
     case 'PUT':
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql = "UPDATE categorias SET categoria = '$data[categoria]' WHERE id_pelicula = '$data[id_pelicula]'";
+        $sql = "UPDATE categorias SET categoria = '$data[categoria]' WHERE id_categoria = '{$data['id_categoria']}'";
         echo json_encode(['success' => $conn->query($sql)]);
         break;
 
     case 'DELETE':
-        $id_pelicula = $_GET['id_pelicula'];
-        $sql = "DELETE FROM categorias WHERE id_pelicula = '$id_pelicula'";
+        $id_categoria = $_GET['id_categoria'];
+    
+        // Eliminar relaciones primero
+        $sqlRelacion = "DELETE FROM pelicula_categoria WHERE id_categoria = '$id_categoria'";
+        $conn->query($sqlRelacion);
+    
+        // Luego eliminar la categoría
+        $sql = "DELETE FROM categorias WHERE id_categoria = '$id_categoria'";
         echo json_encode(['success' => $conn->query($sql)]);
         break;
+        
 }
 ?>
