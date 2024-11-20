@@ -18,7 +18,9 @@ if (isset($_SESSION['email']) && $_SESSION['email'] == 'admin@swagplay.com') {
 <body>
     <header>
         <nav class="container">
-            <div class="logo">SwagPlay</div>
+            <div class="logo">
+                <a href="../../index.php">🎬SwagPlay</a>
+            </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
                 <a href="#recommendations">Recomendaciones</a>
@@ -71,27 +73,6 @@ if (isset($_SESSION['email']) && $_SESSION['email'] == 'admin@swagplay.com') {
             </div>
         </section>
 
-        <section id="my-list" class="container">
-            <h2>Mi Lista</h2>
-            <div class="content-grid">
-                <div class="content-card">
-                    <img src="/placeholder.svg?height=200&amp;width=300" alt="Película en Mi Lista 1">
-                    <div class="content-info">
-                        <h3>Ecos del Pasado</h3>
-                        <p>Una historia conmovedora sobre la memoria y el perdón.</p>
-                    </div>
-                </div>
-                <div class="content-card">
-                    <img src="/placeholder.svg?height=200&amp;width=300" alt="Película en Mi Lista 2">
-                    <div class="content-info">
-                        <h3>Código Enigma</h3>
-                        <p>Un thriller de espionaje que te mantendrá al borde del asiento.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
     <footer>
         <div class="container">
             <div class="footer-links">
@@ -126,7 +107,7 @@ if (isset($_SESSION['email']) && $_SESSION['email'] == 'admin@swagplay.com') {
         document.getElementById('logoutBtn').addEventListener('click', () => {
             fetch('../auth/logout.php', { method: 'POST' })
             .then(() => {
-                window.location.href = '../../index.php';
+                window.location.href = '../../index';
             });
         });
 
