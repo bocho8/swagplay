@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-if (isset($_SESSION['email']) && $_SESSION['email'] == 'admin@swagplay.com') {
-    header("Location: admin_panel.php");
+if(!isset($_SESSION["email"])){
+    header("Location: ../../index.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>

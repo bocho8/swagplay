@@ -18,18 +18,22 @@ if($_SESSION['email'] != 'admin@swagplay.com') {
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>SwagPlay - Panel de Administración</h1>
-            <nav>
+        <nav class="container">
+            <div class="logo">
+                <a href="../../index.php">🎬SwagPlay</a>
+            </div>
+            <div class="nav-links">
                 <a href="#usuarios">Usuarios</a>
                 <a href="#peliculas">Películas</a>
                 <a href="#categorias">Categorías</a>
                 <a href="#perfiles">Perfiles</a>
                 <a href="#suscripciones">Suscripciones</a>
                 <a href="#visualizaciones">Visualizaciones</a>
-            </nav>
-            <button id="logoutBtn">Cerrar Sesión</button>
-        </div>
+                <div class="auth-buttons">
+                    <button id="logoutBtn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <div id="notification" class="notification"></div>

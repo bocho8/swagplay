@@ -1,11 +1,7 @@
 <?php
 include '../config/db_connect.php';
+include 'is_admin.php';
 session_start();
-
-if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {
-    http_response_code(403);
-    exit();
-}
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
@@ -42,6 +38,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'POST':
+        verificarPermisosAdmin();
         $data = json_decode(file_get_contents('php://input'), true);
     
         $sql = "INSERT INTO pelicula (titulo, descripcion, calificacion_usuarios, foto, lanzamiento) 
@@ -67,6 +64,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         
 
     case 'PUT':
+        verificarPermisosAdmin();
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "UPDATE pelicula SET titulo = '$data[titulo]', descripcion = '$data[descripcion]', 
                 calificacion_usuarios = '$data[calificacion_usuarios]', foto = '$data[foto]', 
@@ -75,6 +73,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'DELETE':
+        verificarPermisosAdmin();
         $id_pelicula = $_GET['id_pelicula'];
     
         // Eliminar relaciones primero

@@ -165,21 +165,23 @@ function cargarPeliculas() {
     .then(([dataPeliculas, dataCategorias]) => {
         // Cargar tabla de películas
         const tbody = document.getElementById('peliculasTabla');
-        tbody.innerHTML = dataPeliculas.peliculas.map(pelicula => `
-            <tr>
-                <td>${pelicula.id_pelicula}</td>
-                <td>${pelicula.titulo}</td>
-                <td>${pelicula.descripcion}</td>
-                <td>${pelicula.calificacion_usuarios}</td>
-                <td>${pelicula.foto}</td>
-                <td>${pelicula.lanzamiento}</td>
-                <td>${pelicula.categorias ? pelicula.categorias.map(cat => `<span class="categoria-badge">${cat.nombre}</span>`).join(' ') : 'Sin categorías'}</td>
-                <td>
-                    <button onclick="editarPelicula(${pelicula.id_pelicula})">Editar</button>
-                    <button onclick="eliminarPelicula(${pelicula.id_pelicula})">Eliminar</button>
-                </td>
-            </tr>
-        `).join('');
+        tbody.innerHTML = dataPeliculas.peliculas.map(pelicula => {
+            return `
+                <tr>
+                    <td>${pelicula.id_pelicula}</td>
+                    <td>${pelicula.titulo}</td>
+                    <td>${pelicula.descripcion}</td>
+                    <td>${pelicula.calificacion_usuarios}</td>
+                    <td><img src="${pelicula.foto}" alt="${pelicula.titulo}" title="${pelicula.foto}" width="50" height="50"></td>
+                    <td>${pelicula.lanzamiento}</td>
+                    <td>${pelicula.categorias ? pelicula.categorias.map(cat => `<span class="categoria-badge">${cat.nombre}</span>`).join(' ') : 'Sin categorías'}</td>
+                    <td>
+                        <button onclick="editarPelicula(${pelicula.id_pelicula})">Editar</button>
+                        <button onclick="eliminarPelicula(${pelicula.id_pelicula})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
 
         // Cargar tabla de categorías
         const tbodyCategorias = document.getElementById('categoriasTabla');
@@ -205,6 +207,7 @@ function cargarPeliculas() {
     })
     .catch(err => showNotification('Error al cargar datos: ' + err, true));
 }
+
 
 // Función para agregar película
 function agregarPelicula() {

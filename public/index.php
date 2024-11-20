@@ -35,7 +35,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
             </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
-                <a href="#movies">Películas</a>
+                <a href="src/views/panel_usuario.php">Películas</a>
                 <div class="auth-buttons">
                 <?php if ($tipo_usuario == 'admin'): ?>
                         <a href="src/views/admin_panel.php">Panel Administrador</a>
@@ -66,36 +66,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
         <section id="featured" class="featured">
             <div class="container">
                 <h2>Tendencias Actuales</h2>
-                <div class="content-grid">
-                    <div class="content-card">
-                        <img src="/placeholder.svg?height=300&width=200" alt="Odisea Cósmica">
-                        <div class="content-info">
-                            <h3>Odisea Cósmica</h3>
-                            <p>Un viaje alucinante a través del espacio y el tiempo.</p>
-                        </div>
-                    </div>
-                    <div class="content-card">
-                        <img src="/placeholder.svg?height=300&width=200" alt="Noches de Neón">
-                        <div class="content-info">
-                            <h3>Noches de Neón</h3>
-                            <p>Sumérgete en el vibrante inframundo de una ciudad futurista.</p>
-                        </div>
-                    </div>
-                    <div class="content-card">
-                        <img src="/placeholder.svg?height=300&width=200" alt="Salto Cuántico">
-                        <div class="content-info">
-                            <h3>Salto Cuántico</h3>
-                            <p>Desentraña los misterios del reino cuántico.</p>
-                        </div>
-                    </div>
-                    <div class="content-card">
-                        <img src="/placeholder.svg?height=300&width=200" alt="Ecos de la Eternidad">
-                        <div class="content-info">
-                            <h3>Ecos de la Eternidad</h3>
-                            <p>Una historia épica que abarca siglos y dimensiones.</p>
-                        </div>
-                    </div>
-                </div>
+                <div id="content-grid" class="content-grid"></div>
             </div>
         </section>
     </main>
@@ -141,6 +112,46 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        fetch('src/api/peliculas.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la API: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const grid = document.getElementById('content-grid');
+            grid.innerHTML = ''; // Limpiar contenido previo (si existe)
+
+            if (data.peliculas.length === 0) {
+                grid.innerHTML = '<p>No hay películas disponibles.</p>';
+                return;
+            }
+
+            // Generar dinámicamente las tarjetas de películas
+            data.peliculas.forEach(pelicula => {
+                const card = document.createElement('div');
+                card.className = 'content-card';
+
+                card.innerHTML = `
+                    <img src="${pelicula.foto}" alt="${pelicula.titulo}">
+                    <div class="content-info">
+                        <h3>${pelicula.titulo}</h3>
+                        <p>${pelicula.descripcion}</p>
+                        <p>Calificación: ${pelicula.calificacion_usuarios || 'N/A'}</p>
+                        <p>Lanzamiento: ${pelicula.lanzamiento}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener películas:', error);
+            const grid = document.getElementById('content-grid');
+            grid.innerHTML = '<p>Error al cargar las películas.</p>';
+        });
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
