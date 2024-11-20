@@ -24,8 +24,7 @@ if(!isset($_SESSION["email"])){
             </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
-                <a href="#recommendations">Recomendaciones</a>
-                <a href="#my-list">Mi Lista</a>
+                <a href="#allMovies">Peliculas</a>
                 <div class="user-profile">
                     <div class="user-avatar" id="userAvatar">U</div>
                     <button class="logout-button" id="logoutBtn">Cerrar Sesión</button>
@@ -40,37 +39,10 @@ if(!isset($_SESSION["email"])){
             <p>Continúa disfrutando de tu contenido favorito o descubre algo nuevo.</p>
         </section>
 
-        <section id="recommendations" class="container">
-            <h2>Recomendado para ti</h2>
-            <div class="content-grid">
-                <div class="content-card">
-                    <img src="/placeholder.svg?height=200&amp;width=300" alt="Película Recomendada 1">
-                    <div class="content-info">
-                        <h3>Aventuras Estelares</h3>
-                        <p>Una épica saga espacial que te llevará más allá de las estrellas.</p>
-                    </div>
-                </div>
-                <div class="content-card">
-                    <img src="/placeholder.svg?height=200&amp;width=300" alt="Película Recomendada 2">
-                    <div class="content-info">
-                        <h3>Misterios del Abismo</h3>
-                        <p>Sumérgete en las profundidades oceánicas y descubre sus secretos.</p>
-                    </div>
-                </div>
-                <div class="content-card">
-                    <img src="/placeholder.svg?height=200&amp;width=300" alt="Película Recomendada 3">
-                    <div class="content-info">
-                        <h3>Crononautas</h3>
-                        <p>Un viaje a través del tiempo que cambiará el destino de la humanidad.</p>
-                    </div>
-                </div>
-                <div class="content-card">
-                    <img src="/placeholder.svg?height=200&amp;width=300" alt="Película Recomendada 4">
-                    <div class="content-info">
-                        <h3>Sinfonia de Sueños</h3>
-                        <p>Una experiencia visual y auditiva que desafía la realidad.</p>
-                    </div>
-                </div>
+        <section id="allMovies" class="container">
+            <h2>Películas Disponibles</h2>
+            <div class="content-grid" id="moviesGrid">
+                <!-- Aquí se agregarán todas las películas dinámicamente -->
             </div>
         </section>
 
@@ -89,6 +61,31 @@ if(!isset($_SESSION["email"])){
     <script>
         // Actualizar la interfaz con los datos del usuario
         document.addEventListener('DOMContentLoaded', () => {
+            // Obtener todas las películas desde el servidor
+            fetch('../api/peliculas.php')
+            .then(response => response.json())
+            .then(data => {
+                const peliculas = data.peliculas;
+                const moviesGrid = document.getElementById('moviesGrid');
+
+                // Generar HTML para cada película
+                peliculas.forEach(pelicula => {
+                    const peliculaCard = document.createElement('div');
+                    peliculaCard.classList.add('content-card');
+                    peliculaCard.innerHTML = `
+                        <img src="${pelicula.foto}" alt="${pelicula.titulo}" width="300" height="200">
+                        <div class="content-info">
+                            <h3>${pelicula.titulo}</h3>
+                            <p>${pelicula.descripcion}</p>
+                        </div>
+                    `;
+                    moviesGrid.appendChild(peliculaCard);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar las películas:', error);
+            });
+
             fetch('../auth/get_user_data.php')
             .then(response => {
                 if (!response.ok) throw new Error('Usuario no autorizado');
