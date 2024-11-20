@@ -1,3 +1,12 @@
+<?
+session_start();
+
+if($_SESSION['email'] != 'admin@swagplay.com') {
+    header("Location: ../../index.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
