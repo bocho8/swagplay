@@ -19,7 +19,9 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
 <body>
     <header>
         <nav class="container">
-            <div class="logo">SwagPlay</div>
+            <div class="logo">
+                <a href="index">🎬SwagPlay</a>
+            </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
                 <a href="#movies">Películas</a>

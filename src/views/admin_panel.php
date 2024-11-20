@@ -93,6 +93,8 @@ if($_SESSION['email'] != 'admin@swagplay.com') {
                 <input type="url" id="foto" required>
                 <label for="lanzamiento">Fecha de Lanzamiento:</label>
                 <input type="date" id="lanzamiento" required>
+                <label for="categorias">Categorías:</label>
+                <select id="categorias" name="categorias" multiple></select>
                 <button type="button" id="addMovieBtn" class="btn-add">Agregar Película</button>
             </form>
             <form id="editarPeliculaForm" style="display: none;">
@@ -119,6 +121,7 @@ if($_SESSION['email'] != 'admin@swagplay.com') {
                         <th>Calificación</th>
                         <th>Foto</th>
                         <th>Lanzamiento</th>
+                        <th>Categorias</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -134,15 +137,13 @@ if($_SESSION['email'] != 'admin@swagplay.com') {
                 <h3>Agregar Categoría</h3>
                 <label for="categoria">Categoría:</label>
                 <input type="text" id="categoria" required>
-                <label for="idPelicula">ID Película:</label>
-                <input type="number" id="idPelicula" required>
                 <button type="button" id="addCategoryBtn" class="btn-add">Agregar Categoría</button>
             </form>
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Categoría</th>
-                        <th>ID Película</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>

@@ -1,6 +1,11 @@
 RewriteEngine On
 RewriteBase /swagplay/
 
+# Hide .php extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/?$ $1.php [L]
+
 # Bypass rewrite for any requests that contain "/src/" or "/public/"
 RewriteCond %{REQUEST_URI} ^/swagplay/src/ [OR]
 RewriteCond %{REQUEST_URI} ^/swagplay/public/ [NC]

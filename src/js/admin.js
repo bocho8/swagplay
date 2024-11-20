@@ -157,38 +157,66 @@ function eliminarUsuario(email) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// Funciones similares para Peliculas, Categorías, Perfiles, Suscripciones y visualiza
 function cargarPeliculas() {
-    fetch('../api/peliculas.php')
-    .then(res => res.json())
-    .then(data => {
+    Promise.all([
+        fetch('../api/peliculas.php').then(res => res.json()),
+        fetch('../api/categorias.php').then(res => res.json())
+    ])
+    .then(([dataPeliculas, dataCategorias]) => {
+        // Cargar tabla de películas
         const tbody = document.getElementById('peliculasTabla');
-        tbody.innerHTML = data.peliculas.map(pelicula => `
+        tbody.innerHTML = dataPeliculas.peliculas.map(pelicula => `
             <tr>
+                <td>${pelicula.id_pelicula}</td>
                 <td>${pelicula.titulo}</td>
                 <td>${pelicula.descripcion}</td>
                 <td>${pelicula.calificacion_usuarios}</td>
+                <td>${pelicula.foto}</td>
                 <td>${pelicula.lanzamiento}</td>
+                <td>${pelicula.categorias ? pelicula.categorias.map(cat => `<span class="categoria-badge">${cat.nombre}</span>`).join(' ') : 'Sin categorías'}</td>
                 <td>
                     <button onclick="editarPelicula(${pelicula.id_pelicula})">Editar</button>
                     <button onclick="eliminarPelicula(${pelicula.id_pelicula})">Eliminar</button>
                 </td>
             </tr>
         `).join('');
+
+        // Cargar tabla de categorías
+        const tbodyCategorias = document.getElementById('categoriasTabla');
+        tbodyCategorias.innerHTML = dataCategorias.categorias.map(categoria => `
+            <tr>
+                <td>${categoria.id_categoria}</td>
+                <td>${categoria.categoria}</td>
+                <td>
+                    <button onclick="editarCategoria(${categoria.id_categoria})">Editar</button>
+                    <button onclick="eliminarCategoria(${categoria.id_categoria})">Eliminar</button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Cargar select de categorías en el formulario de películas
+        const selectCategorias = document.getElementById('categorias');
+        selectCategorias.innerHTML = dataCategorias.categorias.map(categoria => `
+            <option value="${categoria.id_categoria}">${categoria.categoria}</option>
+        `).join('');
+
+        // Guardar las categorías en una variable global para usarlas después
+        window.categorias = dataCategorias.categorias;
     })
-    .catch(err => showNotification('Error al cargar películas: ' + err, true));
+    .catch(err => showNotification('Error al cargar datos: ' + err, true));
 }
 
 // Función para agregar película
 function agregarPelicula() {
     const titulo = document.getElementById('titulo').value
-    const descripcion = document.getElementById('titulo').value
-    const calificacion_usuarios = document.getElementById('titulo').value
-    const foto = document.getElementById('titulo').value
-    const lanzamiento = document.getElementById('titulo').value
+    const descripcion = document.getElementById('descripcion').value
+    const calificacion_usuarios = document.getElementById('calificacion').value
+    const foto = document.getElementById('foto').value
+    const lanzamiento = document.getElementById('lanzamiento').value
+    const categorias = Array.from(document.getElementById('categorias').selectedOptions).map(option => option.value); //gracias chat no tenia ni idea
 
     if (titulo && descripcion && !isNaN(calificacion_usuarios)) {
-        const pelicula = { titulo, descripcion, calificacion_usuarios, foto, lanzamiento }
+        const pelicula = { titulo, descripcion, calificacion_usuarios, foto, lanzamiento, categorias }
         fetch('../api/peliculas.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -200,7 +228,9 @@ function agregarPelicula() {
             showNotification('Película agregada exitosamente');
             document.getElementById('peliculaForm').reset();
         })
-        .catch(err => showNotification('Error al agregar película', true));
+        .catch(err => showNotification('Error al agregar película: ' + err, true));
+    } else {
+        showNotification('Completar todos los campos', true)
     }
 }
 
@@ -229,8 +259,8 @@ function cargarCategorias() {
         const tbody = document.getElementById('categoriasTabla');
         tbody.innerHTML = data.categorias.map(categoria => `
             <tr>
+                <td>${categoria.id_categoria}</td>
                 <td>${categoria.categoria}</td>
-                <td>${categoria.idPelicula}</td>
                 <td>
                     <button onclick="editarCategoria(${categoria.id_categoria})">Editar</button>
                     <button onclick="eliminarCategoria(${categoria.id_categoria})">Eliminar</button>
@@ -245,20 +275,19 @@ function cargarCategorias() {
 function agregarCategoria() {
 
     const categoria = document.getElementById('categoria').value
-    const idPelicula = document.getElementById('idPelicula').value
 
-    if (categoria && idPelicula) {
+    if (categoria) {
         fetch('../api/categorias.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({categoria, idPelicula})
+            body: JSON.stringify({categoria})
         })
         .then(res => res.json())
         .then(() => {
             cargarCategorias();
             showNotification('Categoría agregada exitosamente');
         })
-        .catch(err => showNotification('Error al agregar categoría', true));
+        .catch(err => showNotification('Error al agregar categoría: ' + err, true));
     }
 }
 
