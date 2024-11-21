@@ -17,6 +17,9 @@ if($_SESSION['email'] != 'admin@swagplay.com') {
     <link rel="stylesheet" href="../../css/admin_panel.css">
 </head>
 <body>
+
+    <div id="notification" class="notification"></div>
+
     <header>
         <nav class="container">
             <div class="logo">
@@ -35,8 +38,6 @@ if($_SESSION['email'] != 'admin@swagplay.com') {
             </div>
         </nav>
     </header>
-
-    <div id="notification" class="notification"></div>
 
     <main class="container">
         <!-- Sección de Usuarios -->

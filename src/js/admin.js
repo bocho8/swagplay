@@ -64,12 +64,12 @@ function agregarUsuario() {
     // Obtener los valores del formulario
     const email = document.getElementById('email').value;
     const contrasena = document.getElementById('contrasena').value;
-    const telefono = document.getElementById('telefono').value;
-    const ciudad = document.getElementById('ciudad').value;
-    const pais = document.getElementById('pais').value;
+    const telefono = document.getElementById('telefono').value || 0x000000000;
+    const ciudad = document.getElementById('ciudad').value || 'null';
+    const pais = document.getElementById('pais').value || 'null';
 
     // Validar que los campos requeridos no estén vacíos
-    if (email && contrasena && telefono) {
+    if (email && contrasena) {
         const usuario = { email, contrasena, telefono, ciudad, pais };
 
         // Hacer la solicitud para agregar el usuario
@@ -85,7 +85,7 @@ function agregarUsuario() {
             // Limpiar el formulario
             document.getElementById('usuarioForm').reset();
         })
-        .catch(err => showNotification('Error al agregar usuario', true));
+        .catch(err => showNotification('Error al agregar usuario: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -105,8 +105,8 @@ function editarUsuario(email) {
 
     document.getElementById('editEmail').value = email;
     document.getElementById('editTelefono').value = telefonoActual;
-    document.getElementById('editCiudad').value = ciudadActual;
-    document.getElementById('editPais').value = paisActual;
+    document.getElementById('editCiudad').value = ciudadActual || null;
+    document.getElementById('editPais').value = paisActual || null;
 
     // Evento para guardar cambios
     document.getElementById('saveEditBtn').onclick = () => {

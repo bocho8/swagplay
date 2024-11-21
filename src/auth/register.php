@@ -8,6 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contrasena = $_POST['contrasena'];
     $telefono = $_POST['telefono'];
 
+    if(preg_match('/.*(@swagplay\.com)$/', $email) ? true : false == false) {
+        echo "Error al registrar el usuario: no se puede usar el dominio swagplay.com\n";
+    }
+
     if (!$email) {
         echo "Agregue un email valido.";
         exit();
