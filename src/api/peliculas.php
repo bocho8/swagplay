@@ -1,6 +1,6 @@
 <?php
 include '../config/db_connect.php';
-include 'is_admin.php';
+include 'usuarioPermisos.php';
 session_start();
 
 switch ($_SERVER['REQUEST_METHOD']) {

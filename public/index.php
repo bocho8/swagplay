@@ -37,7 +37,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 <a href="#home">Inicio</a>
                 <a href="src/views/panel_usuario.php">Películas</a>
                 <div class="auth-buttons">
-                <?php if ($tipo_usuario == 'admin'): ?>
+                    <?php if ($tipo_usuario == 'admin'): ?>
                         <a href="src/views/admin_panel.php">Panel Administrador</a>
                         <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
                     <?php elseif($tipo_usuario == 'gestor'): ?>

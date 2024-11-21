@@ -1,6 +1,6 @@
 <?php
 include '../config/db_connect.php';
-include 'is_admin.php';
+include 'usuarioPermisos.php';
 session_start();
 
 if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {

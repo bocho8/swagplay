@@ -233,7 +233,7 @@ function agregarPelicula() {
         })
         .catch(err => showNotification('Error al agregar película: ' + err, true));
     } else {
-        showNotification('Completar todos los campos', true)
+        showNotification('Por favor, completa todos los campos requeridos', true);
     }
 }
 
@@ -291,6 +291,8 @@ function agregarCategoria() {
             showNotification('Categoría agregada exitosamente');
         })
         .catch(err => showNotification('Error al agregar categoría: ' + err, true));
+    } else {
+        showNotification('Por favor, completa todos los campos requeridos', true);
     }
 }
 
@@ -350,6 +352,8 @@ function agregarPerfil() {
             showNotification('Perfil agregado exitosamente');
         })
         .catch(err => showNotification('Error al agregar perfil', true));
+    } else {
+        showNotification('Por favor, completa todos los campos requeridos', true);
     }
 }
 
@@ -411,6 +415,8 @@ function agregarSuscripcion() {
             showNotification('Suscripción agregada exitosamente');
         })
         .catch(err => showNotification('Error al agregar suscripción', true));
+    } else {
+        showNotification('Por favor, completa todos los campos requeridos', true);
     }
 }
 
@@ -474,6 +480,8 @@ function agregarVisualizacion() {
             showNotification('Visualización agregada exitosamente');
         })
         .catch(err => showNotification('Error al agregar visualización', true));
+    } else {
+        showNotification('Por favor, completa todos los campos requeridos', true);
     }
 }
 
