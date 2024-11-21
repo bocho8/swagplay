@@ -237,6 +237,64 @@ function agregarPelicula() {
     }
 }
 
+// Función para editar película
+function editarPelicula(id_pelicula) {
+    const fila = document.querySelector(`[data-id_pelicula="${id_pelicula}"]`);
+    const tituloActual = fila.querySelector('td:nth-child(2)').textContent;
+    const descripcionActual = fila.querySelector('td:nth-child(3)').textContent;
+    const calificacionActual = fila.querySelector('td:nth-child(4)').textContent;
+    const fotoActual = fila.querySelector('td:nth-child(5) img').src;
+    const lanzamientoActual = fila.querySelector('td:nth-child(6)').textContent;
+    const categoriasActual = fila.querySelector('td:nth-child(7)').textContent.trim();
+
+    // Mostrar formulario de edición con los datos actuales
+    const form = document.getElementById('editarPeliculaForm');
+    form.style.display = 'block';
+
+    document.getElementById('editTitulo').value = tituloActual;
+    document.getElementById('editDescripcion').value = descripcionActual;
+    document.getElementById('editCalificacion').value = calificacionActual;
+    document.getElementById('editFoto').value = fotoActual;
+    document.getElementById('editLanzamiento').value = lanzamientoActual;
+
+    // Cargar categorías en el select de edición
+    const selectEditCategorias = document.getElementById('editCategorias');
+    selectEditCategorias.innerHTML = window.categorias.map(categoria => {
+        const selected = categoriasActual.includes(categoria.categoria) ? 'selected' : '';
+        return `<option value="${categoria.id_categoria}" ${selected}>${categoria.categoria}</option>`;
+    }).join('');
+
+    // Evento para guardar cambios
+    document.getElementById('saveEditMovieBtn').onclick = () => {
+        const editPelicula = {
+            id_pelicula,
+            descripcion: document.getElementById('editDescripcion').value,
+            calificacion_usuarios: document.getElementById('editCalificacion').value,
+            foto: document.getElementById('editFoto').value,
+            lanzamiento: document.getElementById('editLanzamiento').value,
+            categorias: Array.from(document.getElementById('editCategorias').selectedOptions).map(option => option.value)
+        };
+
+        fetch('../api/peliculas.php', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(editPelicula)
+        })
+        .then(res => res.json())
+        .then(() => {
+            cargarPeliculas();
+            showNotification('Película actualizada exitosamente');
+            form.style.display = 'none'; // Ocultar formulario
+        })
+        .catch(err => showNotification('Error al actualizar película: ' + err, true));
+    };
+
+    // Evento para cancelar edición
+    document.getElementById('cancelEditMovieBtn').onclick = () => {
+        form.style.display = 'none';
+    };
+}
+
 // Función para eliminar película
 function eliminarPelicula(id_pelicula) {
     if (confirm('¿Está seguro de eliminar esta película?')) {
