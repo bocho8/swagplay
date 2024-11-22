@@ -26,7 +26,7 @@ if (!isset($_SESSION['email'])) {
                 <a href="../../index.php">🎬SwagPlay</a>
             </div>
             <div class="nav-links">
-                <a href="#perfil">Perfil</a>
+                <a href="#usuario">Usuario</a>
                 <a href="#suscripciones">Suscripciones</a>
                 <div class="auth-buttons">
                     <button id="logoutBtn">Cerrar Sesión</button>
@@ -36,10 +36,10 @@ if (!isset($_SESSION['email'])) {
     </header>
 
     <main class="container">
-        <!-- Sección de Perfil -->
-        <section id="perfil" class="section">
-            <h2>Gestión de Perfil</h2>
-            <form id="perfilForm">
+        <!-- Sección de Usuario -->
+        <section id="usuario" class="section">
+            <h2>Gestión de Usuario</h2>
+            <form id="usuarioForm">
                 <h3>Actualizar Información</h3>
                 <label for="contrasena">Contraseña:</label>
                 <input type="password" id="contrasena" required>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['email'])) {
                 <label for="tarjetaNumero">Número de Tarjeta:</label>
                 <input type="text" id="tarjetaNumero" required>
                 <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" required>
+                <input type="password" id="cvv" required>
                 <label for="nombreTarjeta">Nombre en la Tarjeta:</label>
                 <input type="text" id="nombreTarjeta" required>
                 <button type="button" id="guardarCambiosBtn" class="btn-add">Guardar Cambios</button>

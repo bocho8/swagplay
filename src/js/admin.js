@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     fetch('../api/sesion.php')
-    .then(res => res.json())
-    .then(data => {
-        if(/.*(@swagplay\.com)$/.test(data.email) && data.email != 'admin@swagplay.com'){
-            cargarPeliculas();
-            cargarCategorias();
-            document.getElementById('addMovieBtn').addEventListener('click', agregarPelicula);
-            document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
-            return;
-        }
-    })
-    .catch(err => console.error("Error al cargar la sesion: " + err))
+        .then(res => res.json())
+        .then(data => {
+            if (/.*(@swagplay\.com)$/.test(data.email) && data.email != 'admin@swagplay.com') {
+                cargarPeliculas();
+                cargarCategorias();
+                document.getElementById('addMovieBtn').addEventListener('click', agregarPelicula);
+                document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
+                return;
+            }
+        })
+        .catch(err => console.error("Error al cargar la sesion: " + err))
 
     cargarUsuarios();
     cargarPeliculas();
@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function showNotification(message, isError = false) {
     const notification = document.getElementById('notification');
     notification.textContent = message;
-    
+
     notification.className = `notification ${isError ? 'error' : ''} show`;
-    
+
     setTimeout(() => {
         notification.classList.remove('show');
     }, 10000);
@@ -42,9 +42,9 @@ function showNotification(message, isError = false) {
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
     fetch('../auth/logout.php', { method: 'POST' })
-    .then(() => {
-        window.location.href = '../../index.php';
-    });
+        .then(() => {
+            window.location.href = '../../index.php';
+        });
     console.log('hola')
 });
 
@@ -54,10 +54,10 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 // Funciones para cargar datos
 function cargarUsuarios() {
     fetch('../api/usuarios.php')
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('usuariosTabla');
-        tbody.innerHTML = data.usuarios.map(usuario => `
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('usuariosTabla');
+            tbody.innerHTML = data.usuarios.map(usuario => `
             <tr data-email="${usuario.email}">
                 <td>${usuario.email}</td>
                 <td class="telefono">${usuario.telefono}</td>
@@ -69,8 +69,8 @@ function cargarUsuarios() {
                 </td>
             </tr>
         `).join('');
-    })
-    .catch(err => showNotification('Error al cargar usuarios: ' + err, true));
+        })
+        .catch(err => showNotification('Error al cargar usuarios: ' + err, true));
 }
 
 // Función para agregar usuario
@@ -92,14 +92,14 @@ function agregarUsuario() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(usuario),
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarUsuarios();
-            showNotification('Usuario agregado exitosamente');
-            // Limpiar el formulario
-            document.getElementById('usuarioForm').reset();
-        })
-        .catch(err => showNotification('Error al agregar usuario: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarUsuarios();
+                showNotification('Usuario agregado exitosamente');
+                // Limpiar el formulario
+                document.getElementById('usuarioForm').reset();
+            })
+            .catch(err => showNotification('Error al agregar usuario: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -136,13 +136,13 @@ function editarUsuario(email) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(usuario)
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarUsuarios();
-            showNotification('Usuario actualizado exitosamente');
-            form.style.display = 'none'; // Ocultar formulario
-        })
-        .catch(err => showNotification('Error al actualizar usuario: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarUsuarios();
+                showNotification('Usuario actualizado exitosamente');
+                form.style.display = 'none'; // Ocultar formulario
+            })
+            .catch(err => showNotification('Error al actualizar usuario: ' + err, true));
     };
 
     // Evento para cancelar edición
@@ -160,12 +160,12 @@ function eliminarUsuario(email) {
         fetch(`../api/usuarios.php?email=${email}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarUsuarios();
-            showNotification('Usuario eliminado exitosamente');
-        })
-        .catch(err => showNotification('Error al eliminar usuario: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarUsuarios();
+                showNotification('Usuario eliminado exitosamente');
+            })
+            .catch(err => showNotification('Error al eliminar usuario: ' + err, true));
     }
 }
 
@@ -176,11 +176,11 @@ function cargarPeliculas() {
         fetch('../api/peliculas.php').then(res => res.json()),
         fetch('../api/categorias.php').then(res => res.json())
     ])
-    .then(([dataPeliculas, dataCategorias]) => {
-        // Cargar tabla de películas
-        const tbody = document.getElementById('peliculasTabla');
-        tbody.innerHTML = dataPeliculas.peliculas.map(pelicula => {
-            return `
+        .then(([dataPeliculas, dataCategorias]) => {
+            // Cargar tabla de películas
+            const tbody = document.getElementById('peliculasTabla');
+            tbody.innerHTML = dataPeliculas.peliculas.map(pelicula => {
+                return `
                 <tr data-id_pelicula="${pelicula.id_pelicula}">
                     <td>${pelicula.id_pelicula}</td>
                     <td>${pelicula.titulo}</td>
@@ -195,11 +195,11 @@ function cargarPeliculas() {
                     </td>
                 </tr>
             `;
-        }).join('');
+            }).join('');
 
-        // Cargar tabla de categorías
-        const tbodyCategorias = document.getElementById('categoriasTabla');
-        tbodyCategorias.innerHTML = dataCategorias.categorias.map(categoria => `
+            // Cargar tabla de categorías
+            const tbodyCategorias = document.getElementById('categoriasTabla');
+            tbodyCategorias.innerHTML = dataCategorias.categorias.map(categoria => `
             <tr>
                 <td>${categoria.id_categoria}</td>
                 <td>${categoria.categoria}</td>
@@ -210,16 +210,16 @@ function cargarPeliculas() {
             </tr>
         `).join('');
 
-        // Cargar select de categorías en el formulario de películas
-        const selectCategorias = document.getElementById('categorias');
-        selectCategorias.innerHTML = dataCategorias.categorias.map(categoria => `
+            // Cargar select de categorías en el formulario de películas
+            const selectCategorias = document.getElementById('categorias');
+            selectCategorias.innerHTML = dataCategorias.categorias.map(categoria => `
             <option value="${categoria.id_categoria}">${categoria.categoria}</option>
         `).join('');
 
-        // Guardar las categorías en una variable global para usarlas después
-        window.categorias = dataCategorias.categorias;
-    })
-    .catch(err => showNotification('Error al cargar datos: ' + err, true));
+            // Guardar las categorías en una variable global para usarlas después
+            window.categorias = dataCategorias.categorias;
+        })
+        .catch(err => showNotification('Error al cargar datos: ' + err, true));
 }
 
 
@@ -236,16 +236,16 @@ function agregarPelicula() {
         const pelicula = { titulo, descripcion, calificacion_usuarios, foto, lanzamiento, categorias }
         fetch('../api/peliculas.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(pelicula)
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarPeliculas();
-            showNotification('Película agregada exitosamente');
-            document.getElementById('peliculaForm').reset();
-        })
-        .catch(err => showNotification('Error al agregar película: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarPeliculas();
+                showNotification('Película agregada exitosamente');
+                document.getElementById('peliculaForm').reset();
+            })
+            .catch(err => showNotification('Error al agregar película: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -292,16 +292,16 @@ function editarPelicula(id_pelicula) {
 
         fetch('../api/peliculas.php', {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(editPelicula)
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarPeliculas();
-            showNotification('Película actualizada exitosamente');
-            form.style.display = 'none'; // Ocultar formulario
-        })
-        .catch(err => showNotification('Error al actualizar película: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarPeliculas();
+                showNotification('Película actualizada exitosamente');
+                form.style.display = 'none'; // Ocultar formulario
+            })
+            .catch(err => showNotification('Error al actualizar película: ' + err, true));
     };
 
     // Evento para cancelar edición
@@ -316,12 +316,12 @@ function eliminarPelicula(id_pelicula) {
         fetch(`../api/peliculas.php?id_pelicula=${id_pelicula}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarPeliculas();
-            showNotification('Película eliminada exitosamente');
-        })
-        .catch(err => showNotification('Error al eliminar película: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarPeliculas();
+                showNotification('Película eliminada exitosamente');
+            })
+            .catch(err => showNotification('Error al eliminar película: ' + err, true));
     }
 }
 
@@ -330,10 +330,10 @@ function eliminarPelicula(id_pelicula) {
 // Función para cargar categorías
 function cargarCategorias() {
     fetch('../api/categorias.php')
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('categoriasTabla');
-        tbody.innerHTML = data.categorias.map(categoria => `
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('categoriasTabla');
+            tbody.innerHTML = data.categorias.map(categoria => `
             <tr>
                 <td>${categoria.id_categoria}</td>
                 <td>${categoria.categoria}</td>
@@ -343,8 +343,8 @@ function cargarCategorias() {
                 </td>
             </tr>
         `).join('');
-    })
-    .catch(err => showNotification('Error al cargar categorías: ' + err, true));
+        })
+        .catch(err => showNotification('Error al cargar categorías: ' + err, true));
 }
 
 // Función para agregar categoría
@@ -355,15 +355,15 @@ function agregarCategoria() {
     if (categoria) {
         fetch('../api/categorias.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({categoria})
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ categoria })
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarCategorias();
-            showNotification('Categoría agregada exitosamente');
-        })
-        .catch(err => showNotification('Error al agregar categoría: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarCategorias();
+                showNotification('Categoría agregada exitosamente');
+            })
+            .catch(err => showNotification('Error al agregar categoría: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -375,12 +375,12 @@ function eliminarCategoria(id_pelicula) {
         fetch(`../api/categorias.php?id_pelicula=${id_pelicula}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarCategorias();
-            showNotification('Categoría eliminada exitosamente');
-        })
-        .catch(err => showNotification('Error al eliminar categoría: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarCategorias();
+                showNotification('Categoría eliminada exitosamente');
+            })
+            .catch(err => showNotification('Error al eliminar categoría: ' + err, true));
     }
 }
 
@@ -389,10 +389,10 @@ function eliminarCategoria(id_pelicula) {
 // Función para cargar perfiles
 function cargarPerfiles() {
     fetch('../api/perfiles.php')
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('perfilesTabla');
-        tbody.innerHTML = data.perfiles.map(perfil => `
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('perfilesTabla');
+            tbody.innerHTML = data.perfiles.map(perfil => `
             <tr>
                 <td>${perfil.nombrePerfil}</td>
                 <td>${perfil.emailPerfil}</td>
@@ -402,8 +402,8 @@ function cargarPerfiles() {
                 </td>
             </tr>
         `).join('');
-    })
-    .catch(err => showNotification('Error al cargar perfiles: ' + err, true));
+        })
+        .catch(err => showNotification('Error al cargar perfiles: ' + err, true));
 }
 
 // Función para agregar perfil
@@ -416,15 +416,15 @@ function agregarPerfil() {
     if (perfil.nombre && perfil.email) {
         fetch('../api/perfiles.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(perfil)
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarPerfiles();
-            showNotification('Perfil agregado exitosamente');
-        })
-        .catch(err => showNotification('Error al agregar perfil: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarPerfiles();
+                showNotification('Perfil agregado exitosamente');
+            })
+            .catch(err => showNotification('Error al agregar perfil: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -436,12 +436,12 @@ function eliminarPerfil(id_perfil) {
         fetch(`../api/perfiles.php?id_perfil=${id_perfil}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarPerfiles();
-            showNotification('Perfil eliminado exitosamente');
-        })
-        .catch(err => showNotification('Error al eliminar perfil: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarPerfiles();
+                showNotification('Perfil eliminado exitosamente');
+            })
+            .catch(err => showNotification('Error al eliminar perfil: ' + err, true));
     }
 }
 
@@ -450,10 +450,10 @@ function eliminarPerfil(id_perfil) {
 // Función para cargar suscripciones
 function cargarSuscripciones() {
     fetch('../api/suscripciones.php')
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('suscripcionesTabla');
-        tbody.innerHTML = data.suscripciones.map(suscripcion => `
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('suscripcionesTabla');
+            tbody.innerHTML = data.suscripciones.map(suscripcion => `
             <tr>
                 <td>${suscripcion.pantallasSimultaneas}</td>
                 <td>${suscripcion.nombreSuscripcion}</td>
@@ -464,8 +464,8 @@ function cargarSuscripciones() {
                 </td>
             </tr>
         `).join('');
-    })
-    .catch(err => showNotification('Error al cargar suscripciones: ' + err, true));
+        })
+        .catch(err => showNotification('Error al cargar suscripciones: ' + err, true));
 }
 
 // Función para agregar suscripción
@@ -479,15 +479,15 @@ function agregarSuscripcion() {
     if (suscripcion.pantallas && suscripcion.nombre && suscripcion.email) {
         fetch('../api/suscripciones.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(suscripcion)
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarSuscripciones();
-            showNotification('Suscripción agregada exitosamente');
-        })
-        .catch(err => showNotification('Error al agregar suscripción: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarSuscripciones();
+                showNotification('Suscripción agregada exitosamente');
+            })
+            .catch(err => showNotification('Error al agregar suscripción: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -499,12 +499,12 @@ function eliminarSuscripcion(email) {
         fetch(`../api/suscripciones.php?email=${email}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarSuscripciones();
-            showNotification('Suscripción eliminada exitosamente');
-        })
-        .catch(err => showNotification('Error al eliminar suscripción: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarSuscripciones();
+                showNotification('Suscripción eliminada exitosamente');
+            })
+            .catch(err => showNotification('Error al eliminar suscripción: ' + err, true));
     }
 }
 
@@ -513,10 +513,10 @@ function eliminarSuscripcion(email) {
 // Función para cargar visualiza
 function cargarVisualizaciones() {
     fetch('../api/visualiza.php')
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('visualizacionesTabla');
-        tbody.innerHTML = data.visualiza.map(visualizacion => `
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('visualizacionesTabla');
+            tbody.innerHTML = data.visualiza.map(visualizacion => `
             <tr>
                 <td>${visualizacion.emailVisualizacion}</td>
                 <td>${visualizacion.idPeliculaVisualizacion}</td>
@@ -528,8 +528,8 @@ function cargarVisualizaciones() {
                 </td>
             </tr>
         `).join('');
-    })
-    .catch(err => showNotification('Error al cargar visualiza: ' + err, true));
+        })
+        .catch(err => showNotification('Error al cargar visualiza: ' + err, true));
 }
 
 // Función para agregar visualización
@@ -544,15 +544,15 @@ function agregarVisualizacion() {
     if (visualizacion.email && visualizacion.idPelicula && visualizacion.califcacion && visualizacion.segundoPelicula) {
         fetch('../api/visualiza.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(visualizacion)
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarVisualizaciones();
-            showNotification('Visualización agregada exitosamente');
-        })
-        .catch(err => showNotification('Error al agregar visualización: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarVisualizaciones();
+                showNotification('Visualización agregada exitosamente');
+            })
+            .catch(err => showNotification('Error al agregar visualización: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -564,11 +564,11 @@ function eliminarVisualizacion(email, id_pelicula) {
         fetch(`../api/visualiza.php?email=${email}&id_pelicula=${id_pelicula}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(() => {
-            cargarVisualizaciones();
-            showNotification('Visualización eliminada exitosamente');
-        })
-        .catch(err => showNotification('Error al eliminar visualización: ' + err, true));
+            .then(res => res.json())
+            .then(() => {
+                cargarVisualizaciones();
+                showNotification('Visualización eliminada exitosamente');
+            })
+            .catch(err => showNotification('Error al eliminar visualización: ' + err, true));
     }
 }

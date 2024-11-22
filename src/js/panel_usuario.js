@@ -24,16 +24,16 @@ function loadUserData() {
     fetch(`/swagplay/src/api/safeUsuarios.php`)
         .then(res => res.json())
         .then(data => {
-            if (data) {
-                document.getElementById('telefono').value = data.telefono || '';
-                document.getElementById('ciudad').value = data.ciudad || '';
-                document.getElementById('pais').value = data.pais || '';
-                document.getElementById('tarjetaNumero').value = data.tarjetaNumero || '';
-                document.getElementById('cvv').value = data.cvv || '';
-                document.getElementById('nombreTarjeta').value = data.nombreTarjeta || '';
+            const usuario = data.usuario
+            if (usuario) {
+                document.getElementById('telefono').value = usuario.telefono || '';
+                document.getElementById('ciudad').value = usuario.cuidad || '';
+                document.getElementById('pais').value = usuario.pais || '';
+                document.getElementById('tarjetaNumero').value = usuario.tarjetaNumero || '';
+                document.getElementById('cvv').value = usuario.cvv || '';
+                document.getElementById('nombreTarjeta').value = usuario.nombreTarjeta || '';
             } else {
                 showNotification('Error al cargar los datos del usuario.', true);
-                console.log(data)
             }
         })
         .catch(err => showNotification('Error al cargar los datos: ' + err.message, true));
@@ -41,9 +41,20 @@ function loadUserData() {
 
 
 function updateUserData() {
-    const perfilForm = document.getElementById('perfilForm');
-    const formData = new FormData(perfilForm);
-    fetch('/swagplay/src/api/safeUsuarios.php', { method: 'PUT', body: formData })
+    const usuario = {
+        telefono: document.getElementById('telefono').value,
+        cuidad: document.getElementById('ciudad').value,
+        pais: document.getElementById('pais').value,
+        numero_tarjeta: document.getElementById('tarjetaNumero').value,
+        codigo_verificador: document.getElementById('cvv').value,
+        nombre_tarjeta: document.getElementById('nombreTarjeta').value
+    }
+
+    fetch('/swagplay/src/api/safeUsuarios.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(usuario)
+    })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
