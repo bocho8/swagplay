@@ -113,10 +113,20 @@ function configurarModales() {
 
 function configurarRedireccionLoginConModal() {
     const botonCTA = document.querySelector('.cta-button');
+    const bottonPA = document.querySelector('.pa-button');
     const loginModal = document.getElementById('loginModal');
 
     if (botonCTA && botonCTA.getAttribute('href') === '#') {
         botonCTA.addEventListener('click', (evento) => {
+            evento.preventDefault();
+            if (loginModal) {
+                loginModal.style.display = 'block';
+            }
+        });
+    }
+
+    if (bottonPA && bottonPA.getAttribute('href') === '#') {
+        bottonPA.addEventListener('click', (evento) => {
             evento.preventDefault();
             if (loginModal) {
                 loginModal.style.display = 'block';

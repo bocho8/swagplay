@@ -34,7 +34,11 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
             </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
-                <a href="src/views/home_usuario.php">Películas</a>
+                <?php if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]): ?>
+                    <a href="src/views/home_usuario.php">Películas</a>
+                <?php else : ?>
+                    <a href="#" class="pa-button">Películas</a>
+                <?php endif; ?>
                 <div class="user-profile" id="user-profile"></div>
                 <div class="auth-buttons">
                     <?php if ($tipo_usuario == 'admin'): ?>

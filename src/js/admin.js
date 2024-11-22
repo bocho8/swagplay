@@ -455,12 +455,12 @@ function cargarSuscripciones() {
             const tbody = document.getElementById('suscripcionesTabla');
             tbody.innerHTML = data.suscripciones.map(suscripcion => `
             <tr>
-                <td>${suscripcion.pantallasSimultaneas}</td>
-                <td>${suscripcion.nombreSuscripcion}</td>
-                <td>${suscripcion.emailSuscripcion}</td>
+                <td>${suscripcion.pantallas_simultaneas}</td>
+                <td>${suscripcion.nombre}</td>
+                <td>${suscripcion.email}</td>
                 <td>
-                    <button onclick="editarSuscripcion(${suscripcion.id_suscripcion})">Editar</button>
-                    <button onclick="eliminarSuscripcion(${suscripcion.id_suscripcion})">Eliminar</button>
+                    <button onclick="editarSuscripcion(${suscripcion.pantallas_simultaneas})">Editar</button>
+                    <button onclick="eliminarSuscripcion(${suscripcion.pantallas_simultaneas})">Eliminar</button>
                 </td>
             </tr>
         `).join('');
