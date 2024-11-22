@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    if (!$email) {
+    if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "Agregue un email válido.";
         exit();
     } 
