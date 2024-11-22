@@ -3,10 +3,12 @@ include '../config/db_connect.php';
 include 'verificar_sesion.php';
 session_start();
 
-if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {
+if (!isset($_SESSION['email'])) {
     http_response_code(403);
     exit();
 }
+
+verificarPermisosGestor();
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':

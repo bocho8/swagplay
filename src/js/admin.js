@@ -10,22 +10,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
                 return;
             }
+            if (data.email != 'admin@swagplay.com')
+                return;
+            cargarUsuarios();
+            cargarPeliculas();
+            cargarCategorias();
+            cargarPerfiles();
+            cargarSuscripciones();
+            cargarVisualizaciones();
+
+            document.getElementById('addUserBtn').addEventListener('click', agregarUsuario);
+            document.getElementById('addMovieBtn').addEventListener('click', agregarPelicula);
+            document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
+            document.getElementById('addProfileBtn').addEventListener('click', agregarPerfil);
+            document.getElementById('addSubscriptionBtn').addEventListener('click', agregarSuscripcion);
         })
         .catch(err => console.error("Error al cargar la sesion: " + err))
-
-    cargarUsuarios();
-    cargarPeliculas();
-    cargarCategorias();
-    cargarPerfiles();
-    cargarSuscripciones();
-    cargarVisualizaciones();
-
-    // Event listeners para botones de agregar
-    document.getElementById('addUserBtn').addEventListener('click', agregarUsuario);
-    document.getElementById('addMovieBtn').addEventListener('click', agregarPelicula);
-    document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
-    document.getElementById('addProfileBtn').addEventListener('click', agregarPerfil);
-    document.getElementById('addSubscriptionBtn').addEventListener('click', agregarSuscripcion);
 });
 
 // Función para mostrar notificaciones
