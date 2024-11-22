@@ -1,66 +1,138 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener todas las películas desde el servidor
-    fetch('../api/peliculas.php')
-    .then(response => response.json())
+    loadUserData();
+    loadUserSubscriptions();
+
+    // Asignar eventos a botones
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('guardarCambiosBtn').addEventListener('click', updateUserData);
+    document.getElementById('elegirPlanBtn').addEventListener('click', chooseSubscriptionPlan);
+});
+
+// Mostrar notificación en pantalla
+function showNotification(message, isError = false) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = `notification ${isError ? 'error' : ''} show`;
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+}
+
+// Función para obtener los datos del usuario y llenar el formulario
+function loadUserData() {
+    fetch(`/swagplay/src/api/safeUsuarios.php`)
+        .then(res => res.json())
+        .then(data => {
+            if (data) {
+                document.getElementById('telefono').value = data.telefono || '';
+                document.getElementById('ciudad').value = data.ciudad || '';
+                document.getElementById('pais').value = data.pais || '';
+                document.getElementById('tarjetaNumero').value = data.tarjetaNumero || '';
+                document.getElementById('cvv').value = data.cvv || '';
+                document.getElementById('nombreTarjeta').value = data.nombreTarjeta || '';
+            } else {
+                showNotification('Error al cargar los datos del usuario.', true);
+                console.log(data)
+            }
+        })
+        .catch(err => showNotification('Error al cargar los datos: ' + err.message, true));
+}
+
+// Función para actualizar los datos del usuario
+function updateUserData() {
+    const perfilForm = document.getElementById('perfilForm');
+    const formData = new FormData(perfilForm);
+    fetch('/swagplay/src/api/safeUsuarios.php', { method: 'PUT', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Datos actualizados correctamente.');
+            } else {
+                showNotification('Error al actualizar los datos.', true);
+            }
+        })
+        .catch(err => showNotification('Error al actualizar los datos: ' + err.message, true));
+}
+
+// Función para elegir un plan de suscripción
+function chooseSubscriptionPlan() {
+    let plan = document.getElementById('planSuscripcion').value;
+    plan = plan == 3 ? 4 : plan;
+    fetch(`/swagplay/src/api/safeSuscripciones.php`, {
+        method: 'POST',
+        body: JSON.stringify({ plan })
+    })
+    .then(res => res.json())
     .then(data => {
-        const peliculas = data.peliculas;
-        const moviesGrid = document.getElementById('moviesGrid');
-
-        // Generar HTML para cada película
-        peliculas.forEach(pelicula => {
-            const peliculaCard = document.createElement('div');
-            peliculaCard.classList.add('content-card');
-            peliculaCard.innerHTML = `
-                <img src="${pelicula.foto}" alt="${pelicula.titulo}">
-                <div class="content-info">
-                    <h3>${pelicula.titulo}</h3>
-                    <p>${pelicula.descripcion}</p>
-                </div>
-            `;
-            moviesGrid.appendChild(peliculaCard);
-        });
+        if (data.success) {
+            showNotification('Plan de suscripción actualizado.');
+            loadUserSubscriptions(); // Recargar suscripciones
+        } else {
+            showNotification('Error al actualizar el plan.', true);
+        }
     })
-    .catch(error => {
-        console.error('Error al cargar las películas:', error);
-    });
+    .catch(err => showNotification('Error al actualizar el plan: ' + err.message, true));
+}
 
-    fetch('../auth/get_user_data.php')
-    .then(response => {
-        if (!response.ok) throw new Error('Usuario no autorizado');
-        return response.json();
+// Función para cargar las suscripciones del usuario
+function loadUserSubscriptions() {
+    fetch(`/swagplay/src/api/safeSuscripciones.php`)
+        .then(res => res.json()) // Parseamos la respuesta JSON
+        .then(data => {
+            // Comprobamos si 'suscripciones' existe y es un arreglo
+            if (data.suscripciones && Array.isArray(data.suscripciones)) {
+                const suscripcionesTabla = document.getElementById('suscripcionesTabla');
+                suscripcionesTabla.innerHTML = ''; // Limpiar la tabla antes de agregar nuevas filas
+
+                // Recorremos cada suscripción y creamos las filas de la tabla
+                data.suscripciones.forEach(subscription => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${subscription.plan}</td>
+                        <td><button class="btn-delete" data-id="${subscription.pantallas_simultaneas}">Eliminar</button></td>
+                    `;
+                    suscripcionesTabla.appendChild(row);
+
+                    // Evento para eliminar suscripción
+                    row.querySelector('.btn-delete').addEventListener('click', () => deleteSubscription(subscription.pantallas_simultaneas));
+                });
+            } else {
+                showNotification('Suscribete para empezar a explorar peliculas');
+                suscripcionesTabla.innerHTML = '';
+            }
+        })
+        .catch(err => showNotification('Error al cargar las suscripciones: ' + err.message, true));
+}
+
+
+// Función para eliminar una suscripción
+function deleteSubscription(pantallas_simultaneas) {
+    fetch(`/swagplay/src/api/safeSuscripciones.php`, {
+        method: 'DELETE',
+        body: JSON.stringify({ pantallas_simultaneas })
     })
-    .then(user => {
-        document.getElementById('userName').textContent = user.name;
-        document.getElementById('userAvatar').textContent = user.name[0].toUpperCase();
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Suscripción eliminada.');
+            loadUserSubscriptions(); // Recargar suscripciones
+        } else {
+            showNotification('Error al eliminar la suscripción.', true);
+        }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        window.location.href = '../../index.php'; // Redirige si no hay sesión
-    });
-});
+    .catch(err => showNotification('Error al eliminar la suscripción: ' + err.message, true));
+}
 
-// Manejar el cierre de sesión
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    fetch('../auth/logout.php', { method: 'POST' })
-    .then(() => {
-        window.location.href = '../../index';
-    });
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
-    } else {
-        header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
-    }
-});
+// Función para cerrar sesión
+function logout() {
+    fetch(`/swagplay/src/api/logout.php`, { method: 'POST' })
+        .then(res => {
+            if (res.ok) {
+                window.location.href = '../../index.php';
+            } else {
+                showNotification('Error al cerrar sesión.', true);
+            }
+        })
+        .catch(err => showNotification('Error al cerrar sesión: ' + err.message, true));
+}

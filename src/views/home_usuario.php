@@ -26,7 +26,7 @@ if(!isset($_SESSION["email"])){
                 <a href="#home">Inicio</a>
                 <a href="#allMovies">Peliculas</a>
                 <div class="user-profile">
-                    <a href="home_usuario.php" class="user-avatar" id="userAvatar">U</a>
+                    <a href="usuario_panel.php" class="user-avatar" id="userAvatar">U</a>
                     <button class="logout-button" id="logoutBtn">Cerrar Sesión</button>
                 </div>
             </div>
@@ -56,6 +56,6 @@ if(!isset($_SESSION["email"])){
         </div>
     </footer>
 
-    <script src="../js/panel_usuario.js"></script>
+    <script src="../js/home_usuario.js"></script>
 </body>
 </html>

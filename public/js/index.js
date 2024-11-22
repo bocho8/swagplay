@@ -135,7 +135,7 @@ function cargarDatosUsuario() {
         })
         .then(user => {
             const profile = document.getElementById('user-profile');
-            profile.innerHTML = '<a href="src/views/home_usuario.php" class="user-avatar" id="userAvatar">U</a>';
+            profile.innerHTML = '<a href="src/views/usuario_panel.php" class="user-avatar" id="userAvatar">U</a>';
             document.getElementById('userAvatar').textContent = user.name[0].toUpperCase();
         })
         .catch(error => { console.error('Error:', error) });
