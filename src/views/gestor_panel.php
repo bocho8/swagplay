@@ -62,6 +62,8 @@ verificarPermisosGestor();
                 <input type="url" id="editFoto">
                 <label for="editLanzamiento">Nueva Fecha de Lanzamiento:</label>
                 <input type="date" id="editLanzamiento">
+                <label for="editCategorias">Nuevas Categorías:</label>
+                <select id="editCategorias" name="editCategorias" multiple></select>
                 <button type="button" id="saveEditMovieBtn">Guardar Cambios</button>
                 <button type="button" id="cancelEditMovieBtn">Cancelar</button>
             </form>

@@ -8,8 +8,6 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-verificarPermisosGestor();
-
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $sql = "SELECT id_categoria, categoria FROM categorias";
@@ -22,6 +20,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'POST':
+        verificarPermisosGestor();
         $data = json_decode(file_get_contents('php://input'), true);
     
         $sqlInsertCategoria = "INSERT INTO categorias (categoria) 
@@ -32,12 +31,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         
 
     case 'PUT':
+        verificarPermisosGestor();
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "UPDATE categorias SET categoria = '$data[categoria]' WHERE id_categoria = '{$data['id_categoria']}'";
         echo json_encode(['success' => $conn->query($sql)]);
         break;
 
     case 'DELETE':
+        verificarPermisosGestor();
         $id_categoria = $_GET['id_categoria'];
     
         // Eliminar relaciones primero
