@@ -59,7 +59,11 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
             <div class="container hero-content">
                 <h1>El Futuro del Streaming</h1>
                 <p>Experimenta el futuro del entretenimiento con 4K nítido y sonido envolvente. Tu puerta a mundos infinitos te espera.</p>
-                <a href="#" class="cta-button">Comienza tu Viaje</a>
+                <?php if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]): ?>
+                    <a class="cta-button" href="src/views/panel_usuario.php">Comienza a Ver Peliculas</a>
+                <?php else : ?>
+                    <button class="cta-button" id="loginBtn">Comienza tu Viaje</button>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -110,140 +114,6 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
         </div>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        fetch('src/api/peliculas.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error en la API: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const grid = document.getElementById('content-grid');
-            grid.innerHTML = ''; // Limpiar contenido previo (si existe)
-
-            if (data.peliculas.length === 0) {
-                grid.innerHTML = '<p>No hay películas disponibles.</p>';
-                return;
-            }
-
-            // Generar dinámicamente las tarjetas de películas
-            data.peliculas.forEach(pelicula => {
-                const card = document.createElement('div');
-                card.className = 'content-card';
-
-                card.innerHTML = `
-                    <img src="${pelicula.foto}" alt="${pelicula.titulo}">
-                    <div class="content-info">
-                        <h3>${pelicula.titulo}</h3>
-                        <p>${pelicula.descripcion}</p>
-                        <p>Calificación: ${pelicula.calificacion_usuarios || 'N/A'}</p>
-                        <p>Lanzamiento: ${pelicula.lanzamiento}</p>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        })
-        .catch(error => {
-            console.error('Error al obtener películas:', error);
-            const grid = document.getElementById('content-grid');
-            grid.innerHTML = '<p>Error al cargar las películas.</p>';
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
-            } else {
-                header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
-            }
-        });
-
-        const logoutBtn = document.getElementById('logoutBtn');
-        console.log(logoutBtn);
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                fetch('src/auth/logout.php', { method: 'POST' })
-                .then(() => {
-                    window.location.href = 'index.php';
-                });
-            });
-        }
-
-        const loginBtn = document.getElementById("loginBtn");
-        const registerBtn = document.getElementById("registerBtn");
-        const loginModal = document.getElementById("loginModal");
-        const registerModal = document.getElementById("registerModal");
-        const closeBtns = document.getElementsByClassName("close");
-
-        loginBtn.onclick = () => loginModal.style.display = "block";
-        registerBtn.onclick = () => registerModal.style.display = "block";
-
-        Array.from(closeBtns).forEach(btn => {
-            btn.onclick = function() {
-                loginModal.style.display = "none";
-                registerModal.style.display = "none";
-            }
-        });
-
-        window.onclick = (event) => {
-            if (event.target == loginModal) {
-                loginModal.style.display = "none";
-            }
-            if (event.target == registerModal) {
-                registerModal.style.display = "none";
-            }
-        };
-
-        document.getElementById("loginForm").onsubmit = (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-
-            fetch("src/auth/login.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                if (data === "success") {
-                    window.location.href = "index.php";
-                } else {
-                    document.getElementById("login_response").innerHTML = data;
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        };
-
-        document.getElementById("registerForm").onsubmit = (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-
-            fetch("src/auth/register.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                if (data === "success") {
-                    window.location.href = "index.php";
-                } else {
-                    document.getElementById("register_response").innerHTML = data;
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        };
-    });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
