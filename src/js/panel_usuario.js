@@ -136,7 +136,7 @@ function deleteSubscription(pantallas_simultaneas) {
 
 
 function logout() {
-    fetch(`/swagplay/src/api/logout.php`, { method: 'POST' })
+    fetch(`/swagplay/src/auth/logout.php`, { method: 'POST' })
         .then(res => {
             if (res.ok) {
                 window.location.href = '../../index.php';
