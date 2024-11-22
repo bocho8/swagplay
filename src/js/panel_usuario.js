@@ -2,24 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     loadUserData();
     loadUserSubscriptions();
 
-    // Asignar eventos a botones
+
     document.getElementById('logoutBtn').addEventListener('click', logout);
     document.getElementById('guardarCambiosBtn').addEventListener('click', updateUserData);
     document.getElementById('elegirPlanBtn').addEventListener('click', chooseSubscriptionPlan);
 });
 
-// Mostrar notificación en pantalla
+
 function showNotification(message, isError = false) {
     const notification = document.getElementById('notification');
     notification.textContent = message;
     notification.className = `notification ${isError ? 'error' : ''} show`;
-    
+
     setTimeout(() => {
         notification.classList.remove('show');
     }, 3000);
 }
 
-// Función para obtener los datos del usuario y llenar el formulario
+
 function loadUserData() {
     fetch(`/swagplay/src/api/safeUsuarios.php`)
         .then(res => res.json())
@@ -39,7 +39,7 @@ function loadUserData() {
         .catch(err => showNotification('Error al cargar los datos: ' + err.message, true));
 }
 
-// Función para actualizar los datos del usuario
+
 function updateUserData() {
     const perfilForm = document.getElementById('perfilForm');
     const formData = new FormData(perfilForm);
@@ -55,7 +55,7 @@ function updateUserData() {
         .catch(err => showNotification('Error al actualizar los datos: ' + err.message, true));
 }
 
-// Función para elegir un plan de suscripción
+
 function chooseSubscriptionPlan() {
     let plan = document.getElementById('planSuscripcion').value;
     plan = plan == 3 ? 4 : plan;
@@ -63,29 +63,29 @@ function chooseSubscriptionPlan() {
         method: 'POST',
         body: JSON.stringify({ plan })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('Plan de suscripción actualizado.');
-            loadUserSubscriptions(); // Recargar suscripciones
-        } else {
-            showNotification('Error al actualizar el plan.', true);
-        }
-    })
-    .catch(err => showNotification('Error al actualizar el plan: ' + err.message, true));
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Plan de suscripción actualizado.');
+                loadUserSubscriptions();
+            } else {
+                showNotification('Error al actualizar el plan.', true);
+            }
+        })
+        .catch(err => showNotification('Error al actualizar el plan: ' + err.message, true));
 }
 
-// Función para cargar las suscripciones del usuario
+
 function loadUserSubscriptions() {
     fetch(`/swagplay/src/api/safeSuscripciones.php`)
-        .then(res => res.json()) // Parseamos la respuesta JSON
+        .then(res => res.json())
         .then(data => {
-            // Comprobamos si 'suscripciones' existe y es un arreglo
+
             if (data.suscripciones && Array.isArray(data.suscripciones)) {
                 const suscripcionesTabla = document.getElementById('suscripcionesTabla');
-                suscripcionesTabla.innerHTML = ''; // Limpiar la tabla antes de agregar nuevas filas
+                suscripcionesTabla.innerHTML = '';
 
-                // Recorremos cada suscripción y creamos las filas de la tabla
+
                 data.suscripciones.forEach(subscription => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -94,7 +94,7 @@ function loadUserSubscriptions() {
                     `;
                     suscripcionesTabla.appendChild(row);
 
-                    // Evento para eliminar suscripción
+
                     row.querySelector('.btn-delete').addEventListener('click', () => deleteSubscription(subscription.pantallas_simultaneas));
                 });
             } else {
@@ -106,25 +106,25 @@ function loadUserSubscriptions() {
 }
 
 
-// Función para eliminar una suscripción
+
 function deleteSubscription(pantallas_simultaneas) {
     fetch(`/swagplay/src/api/safeSuscripciones.php`, {
         method: 'DELETE',
         body: JSON.stringify({ pantallas_simultaneas })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('Suscripción eliminada.');
-            loadUserSubscriptions(); // Recargar suscripciones
-        } else {
-            showNotification('Error al eliminar la suscripción.', true);
-        }
-    })
-    .catch(err => showNotification('Error al eliminar la suscripción: ' + err.message, true));
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Suscripción eliminada.');
+                loadUserSubscriptions();
+            } else {
+                showNotification('Error al eliminar la suscripción.', true);
+            }
+        })
+        .catch(err => showNotification('Error al eliminar la suscripción: ' + err.message, true));
 }
 
-// Función para cerrar sesión
+
 function logout() {
     fetch(`/swagplay/src/api/logout.php`, { method: 'POST' })
         .then(res => {
