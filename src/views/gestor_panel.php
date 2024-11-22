@@ -1,5 +1,5 @@
 <?php
-include '../api/is_admin.php';
+include '../api/verificar_sesion.php';
 session_start();
 verificarPermisosGestor();
 ?>

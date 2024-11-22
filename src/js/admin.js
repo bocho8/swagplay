@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    fetch('../api/sesion.php')
+    .then(res => res.json())
+    .then(data => {
+        if(/.*(@swagplay\.com)$/.test(data.email) && data.email != 'admin@swagplay.com'){
+            cargarPeliculas();
+            cargarCategorias();
+            document.getElementById('addMovieBtn').addEventListener('click', agregarPelicula);
+            document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
+            return;
+        }
+    })
+    .catch(err => console.error("Error al cargar la sesion: " + err))
+
     cargarUsuarios();
     cargarPeliculas();
     cargarCategorias();
@@ -104,9 +118,9 @@ function editarUsuario(email) {
     form.style.display = 'block';
 
     document.getElementById('editEmail').value = email;
-    document.getElementById('editTelefono').value = telefonoActual;
-    document.getElementById('editCiudad').value = ciudadActual || null;
-    document.getElementById('editPais').value = paisActual || null;
+    document.getElementById('editTelefono').value = telefonoActual || 0x000000000;
+    document.getElementById('editCiudad').value = ciudadActual || 'null';
+    document.getElementById('editPais').value = paisActual || 'null';
 
     // Evento para guardar cambios
     document.getElementById('saveEditBtn').onclick = () => {
@@ -128,7 +142,7 @@ function editarUsuario(email) {
             showNotification('Usuario actualizado exitosamente');
             form.style.display = 'none'; // Ocultar formulario
         })
-        .catch(err => showNotification('Error al actualizar usuario', true));
+        .catch(err => showNotification('Error al actualizar usuario: ' + err, true));
     };
 
     // Evento para cancelar edición
@@ -151,7 +165,7 @@ function eliminarUsuario(email) {
             cargarUsuarios();
             showNotification('Usuario eliminado exitosamente');
         })
-        .catch(err => showNotification('Error al eliminar usuario', true));
+        .catch(err => showNotification('Error al eliminar usuario: ' + err, true));
     }
 }
 
@@ -167,7 +181,7 @@ function cargarPeliculas() {
         const tbody = document.getElementById('peliculasTabla');
         tbody.innerHTML = dataPeliculas.peliculas.map(pelicula => {
             return `
-                <tr>
+                <tr data-id_pelicula="${pelicula.id_pelicula}">
                     <td>${pelicula.id_pelicula}</td>
                     <td>${pelicula.titulo}</td>
                     <td>${pelicula.descripcion}</td>
@@ -268,6 +282,7 @@ function editarPelicula(id_pelicula) {
     document.getElementById('saveEditMovieBtn').onclick = () => {
         const editPelicula = {
             id_pelicula,
+            titulo: tituloActual,
             descripcion: document.getElementById('editDescripcion').value,
             calificacion_usuarios: document.getElementById('editCalificacion').value,
             foto: document.getElementById('editFoto').value,
@@ -306,7 +321,7 @@ function eliminarPelicula(id_pelicula) {
             cargarPeliculas();
             showNotification('Película eliminada exitosamente');
         })
-        .catch(err => showNotification('Error al eliminar película', true));
+        .catch(err => showNotification('Error al eliminar película: ' + err, true));
     }
 }
 
@@ -365,7 +380,7 @@ function eliminarCategoria(id_pelicula) {
             cargarCategorias();
             showNotification('Categoría eliminada exitosamente');
         })
-        .catch(err => showNotification('Error al eliminar categoría', true));
+        .catch(err => showNotification('Error al eliminar categoría: ' + err, true));
     }
 }
 
@@ -409,7 +424,7 @@ function agregarPerfil() {
             cargarPerfiles();
             showNotification('Perfil agregado exitosamente');
         })
-        .catch(err => showNotification('Error al agregar perfil', true));
+        .catch(err => showNotification('Error al agregar perfil: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -426,7 +441,7 @@ function eliminarPerfil(id_perfil) {
             cargarPerfiles();
             showNotification('Perfil eliminado exitosamente');
         })
-        .catch(err => showNotification('Error al eliminar perfil', true));
+        .catch(err => showNotification('Error al eliminar perfil: ' + err, true));
     }
 }
 
@@ -472,7 +487,7 @@ function agregarSuscripcion() {
             cargarSuscripciones();
             showNotification('Suscripción agregada exitosamente');
         })
-        .catch(err => showNotification('Error al agregar suscripción', true));
+        .catch(err => showNotification('Error al agregar suscripción: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -489,7 +504,7 @@ function eliminarSuscripcion(email) {
             cargarSuscripciones();
             showNotification('Suscripción eliminada exitosamente');
         })
-        .catch(err => showNotification('Error al eliminar suscripción', true));
+        .catch(err => showNotification('Error al eliminar suscripción: ' + err, true));
     }
 }
 
@@ -537,7 +552,7 @@ function agregarVisualizacion() {
             cargarVisualizaciones();
             showNotification('Visualización agregada exitosamente');
         })
-        .catch(err => showNotification('Error al agregar visualización', true));
+        .catch(err => showNotification('Error al agregar visualización: ' + err, true));
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
@@ -554,6 +569,6 @@ function eliminarVisualizacion(email, id_pelicula) {
             cargarVisualizaciones();
             showNotification('Visualización eliminada exitosamente');
         })
-        .catch(err => showNotification('Error al eliminar visualización', true));
+        .catch(err => showNotification('Error al eliminar visualización: ' + err, true));
     }
 }

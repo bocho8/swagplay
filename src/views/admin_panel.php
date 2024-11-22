@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include '../api/usuarioPermisos.php';
+include '../api/verificar_sesion.php';
 
 if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {
     header("Location: ../../index.php"); // Redirige al usuario no autorizado
