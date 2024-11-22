@@ -48,7 +48,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         if ($resultCheck->num_rows > 0) {
 
-            $sqlUpdate = "UPDATE suscripcion SET nombre = '$plan' WHERE email = '$email'";
+            $sqlUpdate = "UPDATE suscripcion SET pantallas_simultaneas = '$plan' WHERE email = '$email'";
             if ($conn->query($sqlUpdate)) {
                 echo json_encode(['success' => 'Plan de suscripción actualizado']);
             } else {
@@ -56,7 +56,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             }
         } else {
 
-            $sqlInsert = "INSERT INTO suscripcion (email, nombre) VALUES ('$email', '$plan')";
+            $sqlInsert = "INSERT INTO suscripcion (email, pantallas_simultaneas) VALUES ('$email', '$plan')";
             if ($conn->query($sqlInsert)) {
                 echo json_encode(['success' => 'Nueva suscripción creada']);
             } else {

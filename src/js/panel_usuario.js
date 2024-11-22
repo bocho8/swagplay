@@ -99,7 +99,7 @@ function loadUserSubscriptions() {
                 data.suscripciones.forEach(subscription => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${subscription.plan}</td>
+                        <td>${subscription.pantallas_simultaneas}</td>
                         <td><button class="btn-delete" data-id="${subscription.pantallas_simultaneas}">Eliminar</button></td>
                     `;
                     suscripcionesTabla.appendChild(row);
