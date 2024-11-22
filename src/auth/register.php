@@ -8,18 +8,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contrasena = $_POST['contrasena'];
     $telefono = $_POST['telefono'];
 
-    if(preg_match('/.*(@swagplay\.com)$/', $email) ? true : false == false) {
-        echo "Error al registrar el usuario: no se puede usar el dominio swagplay.com\n";
+    if (preg_match('/.*@swagplay\.com$/', $email)) {
+        echo "Error al registrar el usuario: no se puede usar el dominio swagplay.com";
+        exit();
     }
 
     if (!$email) {
-        echo "Agregue un email valido.";
+        echo "Agregue un email válido.";
         exit();
-    } else if (strlen($contrasena) < 8 || !preg_match('/[A-Z]/', $contrasena) || !preg_match('/[a-z]/', $contrasena) || !preg_match('/[0-9]/', $contrasena) || !preg_match('/[\W]/', $contrasena)) {
+    } 
+    
+    if (strlen($contrasena) < 8 || 
+        !preg_match('/[A-Z]/', $contrasena) || 
+        !preg_match('/[a-z]/', $contrasena) || 
+        !preg_match('/[0-9]/', $contrasena) || 
+        !preg_match('/[\W]/', $contrasena)) {
         echo "La contraseña no es segura.";
         exit();
-    } else if (!preg_match("/^[0-9]{10}$/", $telefono)) {
-        echo "El telefono no es valido.";
+    }
+
+    if (!preg_match("/^[0-9]{10}$/", $telefono)) {
+        echo "El teléfono no es válido.";
         exit();
     }
 
@@ -28,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO `usuario` (`email`, `contrasena`, `telefono`) VALUES ('$email', '$hashed_contrasena', '$telefono')";
     
     if ($conn->query($sql) === TRUE) {
-        echo "success";
+        echo "Registro correcto.";
         exit();
     } else {
         echo "Error al registrar el usuario: " . $conn->error;
