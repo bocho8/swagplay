@@ -1,6 +1,5 @@
 <?php
 include '../config/db_connect.php';
-include 'verificar_sesion.php';
 session_start();
 
 if (!isset($_SESSION['email'])) {

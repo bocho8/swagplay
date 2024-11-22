@@ -29,9 +29,8 @@ function loadUserData() {
                 document.getElementById('telefono').value = usuario.telefono || '';
                 document.getElementById('ciudad').value = usuario.cuidad || '';
                 document.getElementById('pais').value = usuario.pais || '';
-                document.getElementById('tarjetaNumero').value = usuario.tarjetaNumero || '';
-                document.getElementById('cvv').value = usuario.cvv || '';
-                document.getElementById('nombreTarjeta').value = usuario.nombreTarjeta || '';
+                document.getElementById('tarjetaNumero').value = usuario.numero_tarjeta || '';
+                document.getElementById('nombreTarjeta').value = usuario.nombre_tarjeta || '';
             } else {
                 showNotification('Error al cargar los datos del usuario.', true);
             }
