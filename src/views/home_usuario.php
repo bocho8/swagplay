@@ -26,7 +26,7 @@ if(!isset($_SESSION["email"])){
                 <a href="#home">Inicio</a>
                 <a href="#allMovies">Peliculas</a>
                 <div class="user-profile">
-                    <div class="user-avatar" id="userAvatar">U</div>
+                    <a href="home_usuario.php" class="user-avatar" id="userAvatar">U</a>
                     <button class="logout-button" id="logoutBtn">Cerrar Sesión</button>
                 </div>
             </div>

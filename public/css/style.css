@@ -313,6 +313,10 @@ footer {
   font-weight: bold;
 }
 
+.user-profile a:hover {
+  color: var(--secondary-color);
+}
+
 @media (max-width: 768px) {
   .nav-links {
       display: none;

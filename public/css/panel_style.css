@@ -92,6 +92,10 @@ nav {
     font-weight: bold;
 }
 
+.user-profile a:hover {
+    color: var(--secondary-color);
+}
+
 .logout-button {
     background-color: transparent;
     border: 2px solid var(--accent-color);
@@ -124,16 +128,16 @@ h1 {
 
 .content-grid {
     display: flex;
-    gap: 1rem; /* Espacio entre las tarjetas */
+    gap: 1rem;
     padding: 2rem 0;
-    overflow-x: auto; /* Habilitar desplazamiento horizontal */
+    overflow-x: auto;
 }
 
 .content-card {
     background-color: var(--secondary-color);
     border-radius: 8px;
-    max-width: 250px; /* Ajustar el tamaño máximo de las tarjetas */
-    flex-shrink: 0; /* Evita que las tarjetas se reduzcan de tamaño */
+    max-width: 250px;
+    flex-shrink: 0;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -199,6 +203,6 @@ footer {
     }
 
     .content-grid {
-        gap: 1rem; /* Mantener el espacio entre las tarjetas */
+        gap: 1rem;
     }
 }

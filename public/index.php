@@ -34,7 +34,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
             </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
-                <a href="src/views/panel_usuario.php">Películas</a>
+                <a href="src/views/home_usuario.php">Películas</a>
                 <div class="user-profile" id="user-profile"></div>
                 <div class="auth-buttons">
                     <?php if ($tipo_usuario == 'admin'): ?>
@@ -60,7 +60,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 <h1>El Futuro del Streaming</h1>
                 <p>Experimenta el futuro del entretenimiento con 4K nítido y sonido envolvente. Tu puerta a mundos infinitos te espera.</p>
                 <?php if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]): ?>
-                    <a class="cta-button" href="src/views/panel_usuario.php">Comienza a Ver Peliculas</a>
+                    <a class="cta-button" href="src/views/home_usuario.php">Comienza a Ver Peliculas</a>
                 <?php else : ?>
                     <a class="cta-button" href="#">Comienza tu Viaje</a>
                 <?php endif; ?>
