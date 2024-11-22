@@ -25,7 +25,6 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Streaming de Próxima Generación</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/handle_nav.js"></script>
 </head>
 <body>
     <header>
@@ -36,6 +35,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
             <div class="nav-links">
                 <a href="#home">Inicio</a>
                 <a href="src/views/panel_usuario.php">Películas</a>
+                <div class="user-profile" id="user-profile"></div>
                 <div class="auth-buttons">
                     <?php if ($tipo_usuario == 'admin'): ?>
                         <a href="src/views/admin_panel.php">Panel Administrador</a>

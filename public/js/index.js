@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     configurarInteraccionesUI();
     configurarFormularios();
     configurarRedireccionLoginConModal();
+    cargarDatosUsuario();
 });
 
 function cargarPeliculas() {
@@ -13,8 +14,9 @@ function cargarPeliculas() {
         })
         .then(datos => {
             const grid = document.getElementById('content-grid');
-            grid.innerHTML = datos.peliculas.length
-                ? datos.peliculas.map(pelicula => crearTarjetaPelicula(pelicula)).join('')
+            const peliculasAMostrar = datos.peliculas.slice(0, 3);
+            grid.innerHTML = peliculasAMostrar.length
+                ? peliculasAMostrar.map(pelicula => crearTarjetaPelicula(pelicula)).join('')
                 : '<p>No hay películas disponibles.</p>';
         })
         .catch(error => {
@@ -115,10 +117,26 @@ function configurarRedireccionLoginConModal() {
 
     if (botonCTA && botonCTA.getAttribute('href') === '#') {
         botonCTA.addEventListener('click', (evento) => {
-            evento.preventDefault(); // Evita el comportamiento por defecto
+            evento.preventDefault();
             if (loginModal) {
-                loginModal.style.display = 'block'; // Muestra el modal de login
+                loginModal.style.display = 'block';
             }
         });
     }
+}
+
+function cargarDatosUsuario() {
+    fetch('src/auth/get_user_data.php')
+        .then(response => {
+            if (response == 'no_session')
+                return;
+            
+            return response.json();
+        })
+        .then(user => {
+            const profile = document.getElementById('user-profile');
+            profile.innerHTML = '<div class="user-avatar" id="userAvatar">U</div>';
+            document.getElementById('userAvatar').textContent = user.name[0].toUpperCase();
+        })
+        .catch(error => { console.error('Error:', error) });
 }
