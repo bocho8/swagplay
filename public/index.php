@@ -62,7 +62,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                 <?php if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]): ?>
                     <a class="cta-button" href="src/views/panel_usuario.php">Comienza a Ver Peliculas</a>
                 <?php else : ?>
-                    <button class="cta-button" id="loginBtn">Comienza tu Viaje</button>
+                    <a class="cta-button" href="#">Comienza tu Viaje</a>
                 <?php endif; ?>
             </div>
         </section>

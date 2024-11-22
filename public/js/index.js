@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarPeliculas();
     configurarInteraccionesUI();
     configurarFormularios();
+    configurarRedireccionLoginConModal();
 });
 
-// Cargar películas y renderizar el grid
 function cargarPeliculas() {
     fetch('src/api/peliculas.php')
         .then(respuesta => {
@@ -23,7 +23,6 @@ function cargarPeliculas() {
         });
 }
 
-// Crear tarjeta de película
 function crearTarjetaPelicula(pelicula) {
     return `
         <div class="content-card">
@@ -38,7 +37,6 @@ function crearTarjetaPelicula(pelicula) {
     `;
 }
 
-// Configurar interacciones de la interfaz
 function configurarInteraccionesUI() {
     document.querySelectorAll('a[href^="#"]').forEach(enlace => {
         enlace.addEventListener('click', function (evento) {
@@ -61,14 +59,12 @@ function configurarInteraccionesUI() {
     }
 }
 
-// Configurar formularios de login y registro
 function configurarFormularios() {
     configurarFormulario('loginForm', 'src/auth/login.php', 'login_response');
     configurarFormulario('registerForm', 'src/auth/register.php', 'register_response');
     configurarModales();
 }
 
-// Configurar un formulario específico
 function configurarFormulario(idFormulario, url, idRespuesta) {
     const formulario = document.getElementById(idFormulario);
     if (formulario) {
@@ -90,7 +86,6 @@ function configurarFormulario(idFormulario, url, idRespuesta) {
     }
 }
 
-// Configurar los modales
 function configurarModales() {
     const loginBtn = document.getElementById("loginBtn");
     const registerBtn = document.getElementById("registerBtn");
@@ -112,4 +107,18 @@ function configurarModales() {
         if (evento.target === loginModal) loginModal.style.display = "none";
         if (evento.target === registerModal) registerModal.style.display = "none";
     };
+}
+
+function configurarRedireccionLoginConModal() {
+    const botonCTA = document.querySelector('.cta-button');
+    const loginModal = document.getElementById('loginModal');
+
+    if (botonCTA && botonCTA.getAttribute('href') === '#') {
+        botonCTA.addEventListener('click', (evento) => {
+            evento.preventDefault(); // Evita el comportamiento por defecto
+            if (loginModal) {
+                loginModal.style.display = 'block'; // Muestra el modal de login
+            }
+        });
+    }
 }

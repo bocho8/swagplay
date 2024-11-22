@@ -179,10 +179,12 @@ h2 {
 }
 
 .content-card img {
+  aspect-ratio: 2 / 3;
   width: 100%;
-  height: 300px;
   object-fit: cover;
+  object-position: center;
 }
+
 
 .content-info {
   padding: 1rem;
