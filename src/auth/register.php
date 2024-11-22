@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO `usuario` (`email`, `contrasena`, `telefono`) VALUES ('$email', '$hashed_contrasena', '$telefono')";
     
     if ($conn->query($sql) === TRUE) {
-        echo "Registro correcto.";
+        echo "success"; // esta asi por el ajax, no lo cambies
         exit();
     } else {
         echo "Error al registrar el usuario: " . $conn->error;
