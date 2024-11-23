@@ -23,7 +23,10 @@ if (!isset($_SESSION['email'])) {
     <header>
         <nav class="container">
             <div class="logo">
-                <a href="../../index.php">🎬SwagPlay</a>
+            <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" 
+            width="50" 
+             height="50" />
+                <a href="../../index.php">SwagPlay</a>
             </div>
             <div class="nav-links">
                 <a href="#usuario">Usuario</a>

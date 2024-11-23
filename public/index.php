@@ -30,7 +30,10 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
     <header>
         <nav class="container">
             <div class="logo">
-                <a href="index">🎬SwagPlay</a>
+            <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" 
+            width="50" 
+             height="50" />
+                <a href="index">SwagPlay</a>
             </div>
             <div class="nav-links">
                 <a href="#home">Inicio</a>
