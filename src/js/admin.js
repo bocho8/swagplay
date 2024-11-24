@@ -15,14 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarUsuarios();
             cargarPeliculas();
             cargarCategorias();
-            cargarPerfiles();
             cargarSuscripciones();
             cargarVisualizaciones();
 
             document.getElementById('addUserBtn').addEventListener('click', agregarUsuario);
             document.getElementById('addMovieBtn').addEventListener('click', agregarPelicula);
             document.getElementById('addCategoryBtn').addEventListener('click', agregarCategoria);
-            document.getElementById('addProfileBtn').addEventListener('click', agregarPerfil);
             document.getElementById('addSubscriptionBtn').addEventListener('click', agregarSuscripcion);
         })
         .catch(err => console.error("Error al cargar la sesion: " + err))
@@ -58,7 +56,7 @@ function cargarUsuarios() {
         .then(data => {
             const tbody = document.getElementById('usuariosTabla');
             tbody.innerHTML = data.usuarios.map(usuario => `
-            <tr data-email="${usuario.email}">
+            <tr data-email-usuario="${usuario.email}">
                 <td>${usuario.email}</td>
                 <td class="telefono">${usuario.telefono}</td>
                 <td class="ciudad">${usuario.cuidad}</td>
@@ -108,7 +106,7 @@ function agregarUsuario() {
 // Función para editar usuario
 function editarUsuario(email) {
     // Obtener datos existentes del usuario (simulado para este caso)
-    const fila = document.querySelector(`[data-email="${email}"]`);
+    const fila = document.querySelector(`[data-email-usuario="${email}"]`);
     const telefonoActual = fila.querySelector('.telefono').textContent;
     const ciudadActual = fila.querySelector('.ciudad').textContent;
     const paisActual = fila.querySelector('.pais').textContent;
@@ -117,7 +115,7 @@ function editarUsuario(email) {
     const form = document.getElementById('editarUsuarioForm');
     form.style.display = 'block';
 
-    document.getElementById('editEmail').value = email;
+    document.getElementById('editEmailUsuario').value = email;
     document.getElementById('editTelefono').value = telefonoActual || 0x000000000;
     document.getElementById('editCiudad').value = ciudadActual || 'null';
     document.getElementById('editPais').value = paisActual || 'null';
@@ -427,7 +425,7 @@ function eliminarCategoria(id_pelicula) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 // Función para cargar perfiles
 function cargarPerfiles() {
     fetch('../api/perfiles.php')
@@ -486,7 +484,7 @@ function eliminarPerfil(id_perfil) {
             .catch(err => showNotification('Error al eliminar perfil: ' + err, true));
     }
 }
-
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 // Función para cargar suscripciones
@@ -496,13 +494,12 @@ function cargarSuscripciones() {
         .then(data => {
             const tbody = document.getElementById('suscripcionesTabla');
             tbody.innerHTML = data.suscripciones.map(suscripcion => `
-            <tr>
-                <td>${suscripcion.pantallas_simultaneas}</td>
-                <td>${suscripcion.nombre}</td>
+            <tr data-email-suscripcion="${suscripcion.email}">
                 <td>${suscripcion.email}</td>
+                <td>${suscripcion.pantallas_simultaneas}</td>
                 <td>
-                    <button onclick="editarSuscripcion(${suscripcion.pantallas_simultaneas})">Editar</button>
-                    <button onclick="eliminarSuscripcion(${suscripcion.pantallas_simultaneas})">Eliminar</button>
+                    <button onclick="editarSuscripcion('${suscripcion.email}')">Editar</button>
+                    <button onclick="eliminarSuscripcion('${suscripcion.email}')">Eliminar</button>
                 </td>
             </tr>
         `).join('');
@@ -514,11 +511,11 @@ function cargarSuscripciones() {
 function agregarSuscripcion() {
     const suscripcion = {
         pantallas: document.getElementById('pantallasSimultaneas').value,
-        nombre: document.getElementById('nombreSuscripcion').value,
+        //nombre: document.getElementById('nombreSuscripcion').value,
         email: document.getElementById('emailSuscripcion').value
     };
 
-    if (suscripcion.pantallas && suscripcion.nombre && suscripcion.email) {
+    if (suscripcion.pantallas && suscripcion.email) {
         fetch('../api/suscripciones.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -533,6 +530,48 @@ function agregarSuscripcion() {
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
+}
+
+// Función para editar suscripción
+function editarSuscripcion(email) {
+    const fila = document.querySelector(`[data-email-suscripcion="${email}"]`);
+    const pantallasActuales = fila.querySelector('td:nth-child(2)').textContent;
+
+    const form = document.getElementById('editarSuscripcionForm');
+    form.style.display = 'block';
+
+    document.getElementById('editEmailSuscripcion').value = email;
+    document.getElementById('editPantallasSimultaneas').value = pantallasActuales;
+
+    document.getElementById('saveEditSuscripcionBtn').onclick = () => {
+        const suscripcion = {
+            email: document.getElementById('editEmailSuscripcion').value,
+            pantallas_simultaneas: document.getElementById('editPantallasSimultaneas').value
+        };
+
+        if (!suscripcion.pantallas_simultaneas) {
+            showNotification('Por favor, completa el número de pantallas simultáneas', true);
+            return;
+        }
+
+        fetch('../api/suscripciones.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(suscripcion)
+        })
+            .then(res => res.json())
+            .then(() => {
+                cargarSuscripciones();
+                showNotification('Suscripción actualizada exitosamente');
+                form.style.display = 'none';
+            })
+            .catch(err => showNotification('Error al actualizar suscripción: ' + err, true));
+    };
+
+    // Evento para cancelar edición
+    document.getElementById('cancelEditSuscripcionBtn').onclick = () => {
+        form.style.display = 'none';
+    };
 }
 
 // Función para eliminar suscripción

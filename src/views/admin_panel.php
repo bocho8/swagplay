@@ -34,7 +34,6 @@ verificarPermisosAdmin(); // por las dudas
                 <a href="#usuarios">Usuarios</a>
                 <a href="#peliculas">Películas</a>
                 <a href="#categorias">Categorías</a>
-                <a href="#perfiles">Perfiles</a>
                 <a href="#suscripciones">Suscripciones</a>
                 <a href="#visualizaciones">Visualizaciones</a>
                 <div class="auth-buttons">
@@ -64,8 +63,8 @@ verificarPermisosAdmin(); // por las dudas
             </form>
             <form id="editarUsuarioForm" style="display: none;">
                 <h3>Editar Usuario</h3>
-                <label for="editEmail">Email (no editable):</label>
-                <input type="email" id="editEmail" readonly>
+                <label for="editEmailUsuario">Email (no editable):</label>
+                <input type="email" id="editEmailUsuario" readonly>
                 <label for="editTelefono">Nuevo Teléfono:</label>
                 <input type="text" id="editTelefono" required>
                 <label for="editCiudad">Nueva Ciudad:</label>
@@ -173,8 +172,8 @@ verificarPermisosAdmin(); // por las dudas
             </table>
         </section>
 
-
         <!-- Sección de Perfiles -->
+        <!--
         <section id="perfiles" class="section">
             <h2>Gestión de Perfiles</h2>
             <form id="perfilForm">
@@ -196,28 +195,34 @@ verificarPermisosAdmin(); // por las dudas
                 </thead>
                 <tbody id="perfilesTabla"></tbody>
             </table>
-        </section>
-
+        </section> -->
 
         <!-- Sección de Suscripciones -->
         <section id="suscripciones" class="section">
             <h2>Gestión de Suscripciones</h2>
             <form id="suscripcionForm">
                 <h3>Agregar Suscripción</h3>
-                <label for="pantallasSimultaneas">Pantallas Simultáneas:</label>
+                <label for="pantallasSimultaneas">Pantallas Simultáneas:</label>                
                 <input type="number" id="pantallasSimultaneas" required>
-                <label for="nombreSuscripcion">Nombre:</label>
-                <input type="text" id="nombreSuscripcion" required>
+                <!-- <label for="nombreSuscripcion">Nombre:</label>
+                <input type="text" id="nombreSuscripcion" required> -->
                 <label for="emailSuscripcion">Email:</label>
                 <input type="email" id="emailSuscripcion" required>
                 <button type="button" id="addSubscriptionBtn" class="btn-add">Agregar Suscripción</button>
             </form>
+            <form id="editarSuscripcionForm" style="display: none;">
+                <label for="editEmailSuscripcion">Email (no editable)</label>
+                <input type="email" id="editEmailSuscripcion" readonly>
+                <label for="editPantallasSimultaneas">Pantallas Simultáneas:</label>
+                <input type="number" id="editPantallasSimultaneas">
+                <button type="button" id="saveEditSuscripcionBtn">Guardar Cambios</button>
+                <button type="button" id="cancelEditSuscripcionBtn">Cancelar</button>
+            </form>
             <table>
                 <thead>
                     <tr>
-                        <th>Pantallas Simultáneas</th>
-                        <th>Nombre</th>
                         <th>Email</th>
+                        <th>Pantallas Simultáneas</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
