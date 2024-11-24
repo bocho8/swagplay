@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["email"])){
+if (!isset($_SESSION["email"])) {
     header("Location: ../../index.php");
     exit();
 }
@@ -10,19 +10,19 @@ if(!isset($_SESSION["email"])){
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Tu Panel de Usuario</title>
     <link rel="stylesheet" href="../../css/panel_style.css">
 </head>
+
 <body>
     <header>
         <nav class="container">
             <div class="logo">
-            <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" 
-            width="50" 
-             height="50" />
+                <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" width="50" height="50" />
                 <a href="../../index.php">SwagPlay</a>
             </div>
             <div class="nav-links">
@@ -47,18 +47,19 @@ if(!isset($_SESSION["email"])){
             <div class="content-grid" id="moviesGrid"></div>
         </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="#">Sobre Nosotros</a>
-                <a href="#">Centro de Ayuda</a>
-                <a href="#">Términos de Uso</a>
-                <a href="#">Política de Privacidad</a>
+        <footer>
+            <div class="container">
+                <div class="footer-links">
+                    <a href="#">Sobre Nosotros</a>
+                    <a href="#">Centro de Ayuda</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Política de Privacidad</a>
+                </div>
+                <p>&copy; 2023 SwagPlay. Todos los derechos reservados.</p>
             </div>
-            <p>&copy; 2023 SwagPlay. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+        </footer>
 
-    <script src="../js/home_usuario.js"></script>
+        <script src="../js/home_usuario.js"></script>
 </body>
+
 </html>

@@ -12,12 +12,14 @@ verificarPermisosAdmin(); // por las dudas
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Panel de Administración</title>
     <link rel="stylesheet" href="../../css/admin_panel.css">
 </head>
+
 <body>
 
     <div id="notification" class="notification"></div>
@@ -25,9 +27,7 @@ verificarPermisosAdmin(); // por las dudas
     <header>
         <nav class="container">
             <div class="logo">
-            <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" 
-            width="50" 
-             height="50" />
+                <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" width="50" height="50"/>
                 <a href="../../index.php">SwagPlay</a>
             </div>
             <div class="nav-links">
@@ -255,4 +255,5 @@ verificarPermisosAdmin(); // por las dudas
     </footer>
     <script src="../js/admin.js"></script>
 </body>
+
 </html>

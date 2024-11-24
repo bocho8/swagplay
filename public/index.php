@@ -3,7 +3,7 @@ session_start();
 
 $tipo_usuario = '';
 
-if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
+if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]) {
     switch ($_SESSION["email"]) {
         case 'admin@swagplay.com':
             $tipo_usuario = 'admin';
@@ -20,19 +20,19 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Streaming de Próxima Generación</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <header>
         <nav class="container">
             <div class="logo">
-            <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" 
-            width="50" 
-             height="50" />
+                <img src="public/assets/images/SIMPLETRANSPARENTE.PNG" width="50" height="50"/>
                 <a href="index">SwagPlay</a>
             </div>
             <div class="nav-links">
@@ -47,12 +47,12 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
                     <?php if ($tipo_usuario == 'admin'): ?>
                         <a href="src/views/admin_panel.php">Panel Administrador</a>
                         <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
-                    <?php elseif($tipo_usuario == 'gestor'): ?>
+                    <?php elseif ($tipo_usuario == 'gestor'): ?>
                         <a href="src/views/gestor_panel.php">Panel Gestor</a>
                         <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
-                    <?php elseif($tipo_usuario == 'usuario'): ?>
+                    <?php elseif ($tipo_usuario == 'usuario'): ?>
                         <button class="auth-button" id="logoutBtn">Cerrar Sesión</button>
-                    <?php elseif($tipo_usuario == ''): ?>
+                    <?php elseif ($tipo_usuario == ''): ?>
                         <button class="auth-button" id="loginBtn">Iniciar Sesión</button>
                         <button class="auth-button" id="registerBtn">Registrarse</button>
                     <?php endif; ?>
@@ -123,4 +123,5 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]){
 
     <script src="js/index.js"></script>
 </body>
+
 </html>
