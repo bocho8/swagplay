@@ -188,7 +188,7 @@ function cargarPeliculas() {
                     <td>${pelicula.calificacion_usuarios}</td>
                     <td><img src="${pelicula.foto}" alt="${pelicula.titulo}" title="${pelicula.foto}" width="50" height="50"></td>
                     <td>${pelicula.lanzamiento}</td>
-                    <td>${pelicula.categorias ? pelicula.categorias.map(cat => `<span class="categoria-badge">${cat.nombre}</span>`).join(' ') : 'Sin categorías'}</td>
+                    <td>${pelicula.categorias ? pelicula.categorias.map(cat => `<span class="categoria-badge">${cat.nombre}</span>`).join(', ') : 'Sin categorías'}</td>
                     <td>
                         <button onclick="editarPelicula(${pelicula.id_pelicula})">Editar</button>
                         <button onclick="eliminarPelicula(${pelicula.id_pelicula})">Eliminar</button>
@@ -334,7 +334,7 @@ function cargarCategorias() {
         .then(data => {
             const tbody = document.getElementById('categoriasTabla');
             tbody.innerHTML = data.categorias.map(categoria => `
-            <tr>
+            <tr data-id_categoria="${categoria.id_categoria}">
                 <td>${categoria.id_categoria}</td>
                 <td>${categoria.categoria}</td>
                 <td>
@@ -367,6 +367,48 @@ function agregarCategoria() {
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
+}
+
+function editarCategoria(id_categoria) {
+    const fila = document.querySelector(`[data-id_categoria="${id_categoria}"]`);
+    const categoriaActual = fila.querySelector('td:nth-child(2)').textContent;
+    
+    const form = document.getElementById('editarCategoriaForm');
+    form.style.display = 'block';
+    
+    document.getElementById('editId').value = id_categoria;
+    document.getElementById('editCategoria').value = categoriaActual;
+    
+    document.getElementById('saveEditCategoriaBtn').onclick = () => {
+        const categoria = {
+            id_categoria: id_categoria,
+            categoria: document.getElementById('editCategoria').value
+        };
+        
+        if (!categoria.categoria) {
+            showNotification('Por favor, completa el nombre de la categoría', true);
+            return;
+        }
+        
+        fetch('../api/categorias.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(categoria)
+        })
+            .then(res => res.json())
+            .then(() => {
+                cargarCategorias();
+                cargarPeliculas();
+                showNotification('Categoría actualizada exitosamente');
+                form.style.display = 'none';
+            })
+            .catch(err => showNotification('Error al actualizar categoría: ' + err, true));
+    };
+    
+    // Evento para cancelar edición
+    document.getElementById('cancelEditCategoriaBtn').onclick = () => {
+        form.style.display = 'none';
+    };
 }
 
 // Función para eliminar categoría

@@ -152,6 +152,15 @@ verificarPermisosAdmin(); // por las dudas
                 <input type="text" id="categoria" required>
                 <button type="button" id="addCategoryBtn" class="btn-add">Agregar Categoría</button>
             </form>
+            <form id="editarCategoriaForm" style="display: none;">
+                <h3>Editar Categoría</h3>
+                <label for="editId">ID (no editable):</label>
+                <input type="text" id="editId" readonly>
+                <label for="editCategoria">Categoría:</label>
+                <input type="text" id="editCategoria" required>
+                <button type="button" id="saveEditCategoriaBtn">Guardar Cambios</button>
+                <button type="button" id="cancelEditCategoriaBtn">Cancelar</button>
+            </form>
             <table>
                 <thead>
                     <tr>
