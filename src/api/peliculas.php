@@ -17,7 +17,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $result = $conn->query($sql);
         $peliculas = [];
         while ($row = $result->fetch_assoc()) {
-            // Convertir las categorías de string a array
+            $row['calificacion_usuarios'] = number_format($row['calificacion_usuarios'], 2);
             $row['categorias'] = [];
             if ($row['categorias_nombres']) {
                 $nombres = explode(',', $row['categorias_nombres']);

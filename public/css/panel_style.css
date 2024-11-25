@@ -18,6 +18,10 @@ body {
     line-height: 1.6;
 }
 
+main {
+    background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.95)), url('../assets/svg/background.svg?height=1080&width=1920') no-repeat center center/cover;
+}
+
 .container {
     width: 90%;
     max-width: 1200px;
@@ -130,10 +134,10 @@ h1 {
 }
 
 .content-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     padding: 2rem 0;
-    overflow-x: auto;
 }
 
 .content-card {
@@ -207,5 +211,153 @@ footer {
 
     .content-grid {
         gap: 1rem;
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* Más oscuro para mejor contraste */
+    backdrop-filter: blur(8px); /* Blur más pronunciado */
+}
+
+.modal-content {
+    background-color: var(--bg-color);
+    margin: 5% auto; /* Más cerca del centro */
+    padding: 30px;
+    border: 2px solid var(--accent-color); /* Borde más visible */
+    width: 85%;
+    max-width: 700px;
+    height: auto;
+    border-radius: 15px; /* Curvas más suaves */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+}
+
+.close {
+    color: var(--accent-color);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--bg-color); /* Invertir colores al pasar */
+    background-color: var(--accent-color); /* Agregar fondo */
+    border-radius: 50%;
+    padding: 5px;
+    outline: none;
+}
+
+#modalImage {
+    width: 200px; /* Ancho fijo más pequeño */
+    height: auto;
+    max-height: 250px; /* Altura máxima reducida */
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 20px 20px 0;
+    float: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Media query para pantallas más pequeñas */
+@media screen and (max-width: 600px) {
+    #modalImage {
+        width: 150px; /* Ancho más pequeño en móviles */
+        float: none;
+        margin: 0 auto 20px auto; /* Centrado en móviles */
+        display: block;
+    }
+}
+
+#modalTitle {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-size: 2rem; /* Más grande para destacar */
+    font-weight: bold;
+    text-align: center; /* Centrar título */
+    text-transform: uppercase;
+}
+
+#modalDescription {
+    color: var(--text-color);
+    line-height: 1.8; /* Espaciado más amplio */
+    font-size: 1.1rem; /* Texto más grande */
+    text-align: justify;
+}
+
+.categoria-badge {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    padding: 0.4rem 0.7rem; /* Badges más grandes */
+    border-radius: 8px;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: capitalize; /* Capitalizar texto */
+}
+
+#modalWatchButton {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#modalWatchButton:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+}
+
+#saveRatingButton {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#saveRatingButton:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+}
+
+#ratingStars .star {
+    font-size: 24px;
+    color: gray;
+    cursor: pointer;
+}
+
+#ratingStars .star.selected {
+    color: gold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

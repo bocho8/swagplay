@@ -16,6 +16,7 @@ if (!isset($_SESSION["email"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Tu Panel de Usuario</title>
     <link rel="stylesheet" href="../../css/panel_style.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/SIMPLETRANSPARENTE.PNG">
 </head>
 
 <body>
@@ -36,7 +37,7 @@ if (!isset($_SESSION["email"])) {
         </nav>
     </header>
 
-    <main>
+    <main class="hero">
         <section id="home" class="welcome-section container">
             <h1>Bienvenido de vuelta, <span id="userName">Usuario</span></h1>
             <p>Continúa disfrutando de tu contenido favorito o descubre algo nuevo.</p>
@@ -46,6 +47,28 @@ if (!isset($_SESSION["email"])) {
             <h2>Películas </h2>
             <div class="content-grid" id="moviesGrid"></div>
         </section>
+
+        <div id="movieModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img id="modalImage" src="" alt="Imagen de la película">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDescription"></p>
+                <p id="modalYear"></p>
+                <p id="modalRating"></p>
+                <p id="calificacionUsuario">Tu calificación: <span id="userRating">Sin calificar</span></p>
+                <div id="ratingStars">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <button id="saveRatingButton">Guardar Calificación</button>
+                <div id="modalCategories"></div>
+                <button id="modalWatchButton">Ver Película</button>
+            </div>
+        </div>
 
         <footer>
             <div class="container">

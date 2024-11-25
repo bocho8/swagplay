@@ -26,6 +26,7 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Streaming de Próxima Generación</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/SIMPLETRANSPARENTE.PNG">
 </head>
 
 <body>
