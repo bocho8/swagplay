@@ -591,38 +591,38 @@ function eliminarSuscripcion(email) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// Función para cargar visualiza
+// Función para cargar visualizaciones
 function cargarVisualizaciones() {
     fetch('../api/visualiza.php')
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById('visualizacionesTabla');
             tbody.innerHTML = data.visualiza.map(visualizacion => `
-            <tr>
-                <td>${visualizacion.emailVisualizacion}</td>
-                <td>${visualizacion.idPeliculaVisualizacion}</td>
-                <td>${visualizacion.calificacionVisualizacion}</td>
-                <td>${visualizacion.segundoPelicula}</td>
-                <td>
-                    <button onclick="editarVisualizacion(${visualizacion.id_visualizacion})">Editar</button>
-                    <button onclick="eliminarVisualizacion(${visualizacion.id_visualizacion})">Eliminar</button>
-                </td>
-            </tr>
-        `).join('');
+                <tr data-email-visualizacion="${visualizacion.email}" data-id-pelicula="${visualizacion.id_pelicula}">
+                    <td>${visualizacion.email}</td>
+                    <td>${visualizacion.id_pelicula}</td>
+                    <td>${visualizacion.calificacion}</td>
+                    <td>${visualizacion.segundo_pelicula}</td>
+                    <td>
+                        <button onclick="editarVisualizacion('${visualizacion.email}', ${visualizacion.id_pelicula})">Editar</button>
+                        <button onclick="eliminarVisualizacion('${visualizacion.email}', ${visualizacion.id_pelicula})">Eliminar</button>
+                    </td>
+                </tr>
+            `).join('');
         })
-        .catch(err => showNotification('Error al cargar visualiza: ' + err, true));
+        .catch(err => showNotification('Error al cargar visualizaciones: ' + err, true));
 }
 
 // Función para agregar visualización
 function agregarVisualizacion() {
     const visualizacion = {
         email: document.getElementById('emailVisualizacion').value,
-        idPelicula: document.getElementById('idPeliculaVisualizacion').value,
-        califcacion: document.getElementById('calificacionVisualizacion').value,
-        segundoPelicula: document.getElementById('segundoPelicula').value
+        id_pelicula: document.getElementById('idPeliculaVisualizacion').value,
+        calificacion: document.getElementById('calificacionVisualizacion').value,
+        segundo_pelicula: document.getElementById('segundoPelicula').value
     };
 
-    if (visualizacion.email && visualizacion.idPelicula && visualizacion.califcacion && visualizacion.segundoPelicula) {
+    if (visualizacion.email && visualizacion.id_pelicula && visualizacion.calificacion && visualizacion.segundo_pelicula) {
         fetch('../api/visualiza.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -637,6 +637,56 @@ function agregarVisualizacion() {
     } else {
         showNotification('Por favor, completa todos los campos requeridos', true);
     }
+}
+
+// Función para editar visualización
+function editarVisualizacion(email, id_pelicula) {
+    // Encuentra la fila correspondiente
+    const fila = document.querySelector(`[data-email-visualizacion="${email}"][data-id-pelicula="${id_pelicula}"]`);
+    const calificacionActual = fila.querySelector('td:nth-child(3)').textContent;
+    const segundoActual = fila.querySelector('td:nth-child(4)').textContent;
+
+    // Muestra el formulario de edición
+    const form = document.getElementById('editarVisualizacionForm');
+    form.style.display = 'block';
+
+    // Rellena los campos del formulario
+    document.getElementById('editEmailVisualizacion').value = email;
+    document.getElementById('editIdPeliculaVisualizacion').value = id_pelicula;
+    document.getElementById('editCalificacionVisualizacion').value = calificacionActual;
+    document.getElementById('editSegundoPelicula').value = segundoActual;
+
+    document.getElementById('saveEditVisualizacionBtn').onclick = () => {
+        const visualizacionEditada = {
+            email,
+            id_pelicula,
+            calificacion: document.getElementById('editCalificacionVisualizacion').value,
+            segundo_pelicula: document.getElementById('editSegundoPelicula').value
+        };
+
+        if (!visualizacionEditada.calificacion || !visualizacionEditada.segundo_pelicula) {
+            showNotification('Por favor, completa todos los campos requeridos', true);
+            return;
+        }
+
+        fetch('../api/visualiza.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(visualizacionEditada)
+        })
+            .then(res => res.json())
+            .then(() => {
+                cargarVisualizaciones();
+                showNotification('Visualización actualizada exitosamente');
+                form.style.display = 'none';
+            })
+            .catch(err => showNotification('Error al actualizar visualización: ' + err, true));
+    };
+
+    // Evento para cancelar edición
+    document.getElementById('cancelEditVisualizacionBtn').onclick = () => {
+        form.style.display = 'none';
+    };
 }
 
 // Función para eliminar visualización

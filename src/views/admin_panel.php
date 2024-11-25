@@ -246,6 +246,18 @@ verificarPermisosAdmin(); // por las dudas
                 <input type="number" id="segundoPelicula" required>
                 <button type="button" id="addVisualizacionBtn" class="btn-add">Registrar Visualización</button>
             </form>
+            <form id="editVisualizacionForm" style="display: none;">
+                <h3>Editar Visualización</h3>
+                <label for="editEmailVisualizacion">Email (no editable)</label>
+                <input type="email" id="editEmailVisualizacion" readonly>
+                <label for="editIdPeliculaVisualizacion">ID Película (no editable)</label>
+                <input type="number" id="editIdPeliculaVisualizacion" readonly>
+                <label for="editCalificacionVisualizacion">Calificación:</label>
+                <input type="number" id="editCalificacionVisualizacion" min="1" max="5" required>
+                <label for="editSegundoPelicula">Segundo en Película:</label>
+                <input type="number" id="editSegundoPelicula" required>
+                <button type="button" id="addVisualizacionBtn" class="btn-add">Registrar Visualización</button>
+            </form>
             <table>
                 <thead>
                     <tr>
