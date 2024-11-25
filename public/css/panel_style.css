@@ -229,15 +229,15 @@ footer {
 
 .modal-content {
     background-color: var(--bg-color);
-    margin: 5% auto; /* Más cerca del centro */
+    margin: 5% auto;
     padding: 30px;
-    border: 2px solid var(--accent-color); /* Borde más visible */
+    border: 2px solid var(--accent-color);
     width: 85%;
     max-width: 700px;
     height: auto;
-    border-radius: 15px; /* Curvas más suaves */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
-    animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .close {
