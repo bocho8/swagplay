@@ -30,6 +30,7 @@ function loadUserData() {
                 document.getElementById('ciudad').value = usuario.cuidad || '';
                 document.getElementById('pais').value = usuario.pais || '';
                 document.getElementById('tarjetaNumero').value = usuario.numero_tarjeta || '';
+                document.getElementById('cvv').value = usuario.codigo_verificador || '';
                 document.getElementById('nombreTarjeta').value = usuario.nombre_tarjeta || '';
             } else {
                 showNotification('Error al cargar los datos del usuario.', true);
@@ -146,3 +147,21 @@ function logout() {
         })
         .catch(err => showNotification('Error al cerrar sesión: ' + err.message, true));
 }
+
+function toggleCardVisibility() {
+    const passwordField = document.getElementById("tarjetaNumero");
+    const togglePassword = document.querySelector(".password-toggle-icon i");
+
+    togglePassword.addEventListener("click", function () {
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        togglePassword.classList.remove("fa-eye");
+        togglePassword.classList.add("fa-eye-slash");
+      } else {
+        passwordField.type = "password";
+        togglePassword.classList.remove("fa-eye-slash");
+        togglePassword.classList.add("fa-eye");
+      }
+    });
+}
+toggleCardVisibility();

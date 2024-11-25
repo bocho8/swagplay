@@ -16,6 +16,7 @@ if (!isset($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwagPlay - Panel de Usuario</title>
     <link rel="stylesheet" href="../../css/admin_panel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -44,7 +45,7 @@ if (!isset($_SESSION['email'])) {
             <h2>Gestión de Usuario</h2>
             <form id="usuarioForm">
                 <h3>Actualizar Información</h3>
-                <label for="contrasena">Contraseña:</label>
+                <label for="contrasena">Nueva Contraseña:</label>
                 <input type="password" id="contrasena" required>
                 <label for="telefono">Teléfono:</label>
                 <input type="text" id="telefono" required>
@@ -53,7 +54,12 @@ if (!isset($_SESSION['email'])) {
                 <label for="pais">País:</label>
                 <input type="text" id="pais" required>
                 <label for="tarjetaNumero">Número de Tarjeta:</label>
-                <input type="text" id="tarjetaNumero" required>
+                <div class="password-input-wrapper">
+                    <input type="password" id="tarjetaNumero" required>
+                    <span class="password-toggle-icon" data-target="tarjetaNumero">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
                 <label for="cvv">CVV:</label>
                 <input type="password" id="cvv" required>
                 <label for="nombreTarjeta">Nombre en la Tarjeta:</label>

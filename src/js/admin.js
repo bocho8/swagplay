@@ -643,16 +643,13 @@ function agregarVisualizacion() {
 
 // Función para editar visualización
 function editarVisualizacion(email, id_pelicula) {
-    // Encuentra la fila correspondiente
     const fila = document.querySelector(`[data-email-visualizacion="${email}"][data-id-pelicula="${id_pelicula}"]`);
     const calificacionActual = fila.querySelector('td:nth-child(3)').textContent;
     const segundoActual = fila.querySelector('td:nth-child(4)').textContent;
 
-    // Muestra el formulario de edición
     const form = document.getElementById('editarVisualizacionForm');
     form.style.display = 'block';
 
-    // Rellena los campos del formulario
     document.getElementById('editEmailVisualizacion').value = email;
     document.getElementById('editIdPeliculaVisualizacion').value = id_pelicula;
     document.getElementById('editCalificacionVisualizacion').value = calificacionActual;

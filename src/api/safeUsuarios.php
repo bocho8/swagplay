@@ -11,7 +11,7 @@ if (!isset($_SESSION['email'])) {
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $email = $_SESSION['email'];
-        $sql = "SELECT email, telefono, cuidad, pais, numero_tarjeta, nombre_tarjeta FROM usuario WHERE email = '$email'";
+        $sql = "SELECT email, telefono, cuidad, pais, numero_tarjeta, codigo_verificador, nombre_tarjeta FROM usuario WHERE email = '$email'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $usuario = $result->fetch_assoc();
@@ -39,7 +39,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $sql = "UPDATE usuario SET telefono = '$telefono', cuidad = '$cuidad', pais = '$pais', 
                 numero_tarjeta = '$numero_tarjeta', codigo_verificador = '$codigo_verificador', 
-                nombre_tarjeta = '$nombre_tarjeta' WHERE email = '$email'";
+                nombre_tarjeta = '$nombre_tarjeta'";
+
+        if (!empty($data['contrasena'])) {
+            $hashedPassword = password_hash($data['contrasena'], PASSWORD_BCRYPT);
+            $sql .= ", contrasena = '$hashedPassword'";
+        }
+
+        $sql .= " WHERE email = '$data[email]'";
 
         if ($conn->query($sql)) {
             echo json_encode(['success' => 'Datos actualizados correctamente']);
