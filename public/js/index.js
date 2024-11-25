@@ -111,22 +111,12 @@ function configurarModales() {
     };
 }
 
-function configurarRedireccionLoginConModal() {
-    const botonCTA = document.querySelector('.cta-button');
-    const bottonPA = document.querySelector('.pa-button');
+function configurarRedireccionLoginConModal(botton_class) {
+    const botton = document.querySelector('.' + botton_class);
     const loginModal = document.getElementById('loginModal');
 
-    if (botonCTA && botonCTA.getAttribute('href') === '#') {
-        botonCTA.addEventListener('click', (evento) => {
-            evento.preventDefault();
-            if (loginModal) {
-                loginModal.style.display = 'block';
-            }
-        });
-    }
-
-    if (bottonPA && bottonPA.getAttribute('href') === '#') {
-        bottonPA.addEventListener('click', (evento) => {
+    if (botton && botton.getAttribute('href') === '#') {
+        botton.addEventListener('click', (evento) => {
             evento.preventDefault();
             if (loginModal) {
                 loginModal.style.display = 'block';
@@ -134,6 +124,11 @@ function configurarRedireccionLoginConModal() {
         });
     }
 }
+
+configurarRedireccionLoginConModal("ic-button");
+configurarRedireccionLoginConModal("pa-button");
+configurarRedireccionLoginConModal("cta-button");
+
 
 function cargarDatosUsuario() {
     fetch('src/auth/get_user_data.php')

@@ -36,10 +36,11 @@ if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]) {
                 <a href="index">SwagPlay</a>
             </div>
             <div class="nav-links">
-                <a href="#home">Inicio</a>
                 <?php if (isset($_SESSION["email"]) && $_SESSION["is_logged_in"]): ?>
-                    <a href="src/views/home_usuario.php">Películas</a>
+                    <a href="src/views/home_usuario.php#home">Inicio</a>
+                    <a href="src/views/home_usuario.php#allMovies">Películas</a>
                 <?php else : ?>
+                    <a href="#" class="ic-button">Inicio</a>
                     <a href="#" class="pa-button">Películas</a>
                 <?php endif; ?>
                 <div class="user-profile" id="user-profile"></div>
