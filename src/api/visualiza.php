@@ -3,7 +3,7 @@ include '../config/db_connect.php';
 include 'verificar_sesion.php';
 session_start();
 
-if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@swagplay.com') {
+if (!isset($_SESSION['email'])) {
     http_response_code(403);
     exit();
 }
@@ -34,6 +34,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'DELETE':
+        verificarPermisosAdmin();
         $email = $_GET['email'];
         $id_pelicula = $_GET['id_pelicula'];
         $sql = "DELETE FROM visualiza WHERE email = '$email' AND id_pelicula = '$id_pelicula'";
