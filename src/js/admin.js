@@ -33,6 +33,10 @@ function showNotification(message, isError = false) {
 
     notification.className = `notification ${isError ? 'error' : ''} show`;
 
+    if (isError) {
+        console.error(message)
+    }
+
     setTimeout(() => {
         notification.classList.remove('show');
     }, 10000);
