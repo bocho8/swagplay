@@ -238,6 +238,11 @@ footer {
     border-radius: 15px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Para colocar los elementos uno debajo del otro */
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    text-align: center;
 }
 
 .close {
@@ -285,18 +290,19 @@ footer {
 
 #modalTitle {
     color: var(--accent-color);
-    margin-bottom: 15px;
-    font-size: 2rem; /* Más grande para destacar */
-    font-weight: bold;
-    text-align: center; /* Centrar título */
+    font-size: 2rem;
     text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 2rem;
 }
 
 #modalDescription {
     color: var(--text-color);
-    line-height: 1.8; /* Espaciado más amplio */
-    font-size: 1.1rem; /* Texto más grande */
+    line-height: 1.8;
+    font-size: 1.1rem;
     text-align: justify;
+    max-width: 90%; /* Limita el ancho para que no se extienda demasiado en pantallas grandes */
+    margin-bottom: 2rem;
 }
 
 .categoria-badge {
@@ -306,6 +312,8 @@ footer {
     padding: 0.4rem 0.7rem; /* Badges más grandes */
     border-radius: 8px;
     margin-right: 0.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
     font-size: 0.9rem;
     font-weight: bold;
     text-transform: capitalize; /* Capitalizar texto */
