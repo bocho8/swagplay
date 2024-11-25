@@ -29,7 +29,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case 'PUT':
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql = "UPDATE usuario SET telefono = '$data[telefono]', cuidad = '$data[cuidad]', pais = '$data[pais]' WHERE email = '$data[email]'";
+        $sql = "UPDATE usuario SET telefono = '$data[telefono]', cuidad = '$data[cuidad]', pais = '$data[pais]'";
+        if (!empty($data['contrasena'])) {
+            $hashedPassword = password_hash($data['contrasena'], PASSWORD_BCRYPT);
+            $sql .= ", contrasena = '$hashedPassword'";
+        }
+        $sql .= " WHERE email = '$data[email]'";
         echo json_encode(['success' => $conn->query($sql)]);
         break;
 

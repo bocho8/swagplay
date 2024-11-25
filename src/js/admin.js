@@ -116,6 +116,7 @@ function editarUsuario(email) {
     form.style.display = 'block';
 
     document.getElementById('editEmailUsuario').value = email;
+    document.getElementById('editContrasena').value = null; 
     document.getElementById('editTelefono').value = telefonoActual || 0x000000000;
     document.getElementById('editCiudad').value = ciudadActual || 'null';
     document.getElementById('editPais').value = paisActual || 'null';
@@ -124,6 +125,7 @@ function editarUsuario(email) {
     document.getElementById('saveEditBtn').onclick = () => {
         const usuario = {
             email: email,
+            contrasena: document.getElementById('editContrasena').value || null,
             telefono: document.getElementById('editTelefono').value,
             cuidad: document.getElementById('editCiudad').value,
             pais: document.getElementById('editPais').value

@@ -65,6 +65,8 @@ verificarPermisosAdmin(); // por las dudas
                 <h3>Editar Usuario</h3>
                 <label for="editEmailUsuario">Email (no editable):</label>
                 <input type="email" id="editEmailUsuario" readonly>
+                <label for="editContrasena">Nueva Contraseña:</label>
+                <input type="password" id="editContrasena">
                 <label for="editTelefono">Nuevo Teléfono:</label>
                 <input type="text" id="editTelefono" required>
                 <label for="editCiudad">Nueva Ciudad:</label>
@@ -256,7 +258,8 @@ verificarPermisosAdmin(); // por las dudas
                 <input type="number" id="editCalificacionVisualizacion" min="1" max="5" required>
                 <label for="editSegundoPelicula">Segundo en Película:</label>
                 <input type="number" id="editSegundoPelicula" required>
-                <button type="button" id="addVisualizacionBtn" class="btn-add">Registrar Visualización</button>
+                <button type="button" id="saveEditVisualizacionBtn">Guardar Cambios</button>
+                <button type="button" id="cancelEditVisualizacionBtn">Cancelar</button>
             </form>
             <table>
                 <thead>
